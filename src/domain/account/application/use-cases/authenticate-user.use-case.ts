@@ -54,10 +54,10 @@ export class AuthenticateUserUseCase {
   }
 
   private async findUser(cpf: string): Promise<Admin | DeliveryPerson | null> {
-    let user = await this.adminsRepositoy.findByCpf(cpf)
+    const user = await this.adminsRepositoy.findByCpf(cpf)
 
     if (!user) {
-      user = await this.deliveryPeopleRepository.findByCpf(cpf)
+      return this.deliveryPeopleRepository.findByCpf(cpf)
     }
 
     return user

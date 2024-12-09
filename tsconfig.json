@@ -23,5 +23,8 @@
         "./src/*"
       ]
     },
+    "types": [
+      "vitest/globals"
+    ]
   }
 }
