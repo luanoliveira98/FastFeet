@@ -4,7 +4,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 
 ## Application Rules
 
-- [ ] The application must have two types of user, delivery person and/or admin
+- [x] The application must have two types of user, delivery person and/or admin
 - [ ] It must be possible to log in with CPF and password
 - [ ] It must be possible to perform CRUD of delivery people
 - [ ] It must be possible to perform CRUD of orders
