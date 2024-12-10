@@ -13,4 +13,8 @@ export class InMemoryDeliveryPeopleRepository
 
     return deliveryPerson
   }
+
+  async create(deliveryPerson: DeliveryPerson): Promise<void> {
+    this.items.push(deliveryPerson)
+  }
 }
