@@ -3,7 +3,10 @@ import {
   Admin,
   AdminProps,
 } from '@/domain/account/enterprise/entities/admin.entity'
+import { PrismaAdminMapper } from '@/infra/database/prisma/mappers/prisma-admin.mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
 
 export function makeAdminFactory(
   override: Partial<AdminProps> = {},
@@ -20,4 +23,19 @@ export function makeAdminFactory(
   )
 
   return admin
+}
+
+@Injectable()
+export class AdminFactory {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async makePrismaAdmin(data: Partial<AdminProps> = {}): Promise<Admin> {
+    const admin = makeAdminFactory(data)
+
+    await this.prisma.user.create({
+      data: PrismaAdminMapper.toPrisma(admin),
+    })
+
+    return admin
+  }
 }

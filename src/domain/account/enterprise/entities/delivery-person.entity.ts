@@ -1,10 +1,12 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/value-objects/unique-entity-id'
+import { UserRole } from '@prisma/client'
 
 export interface DeliveryPersonProps {
   name: string
   cpf: string
   password: string
+  role?: UserRole
 }
 
 export class DeliveryPerson extends Entity<DeliveryPersonProps> {
@@ -32,7 +34,11 @@ export class DeliveryPerson extends Entity<DeliveryPersonProps> {
     this.props.password = password
   }
 
+  get role() {
+    return this.props.role
+  }
+
   static create(props: DeliveryPersonProps, id?: UniqueEntityID) {
-    return new DeliveryPerson(props, id)
+    return new DeliveryPerson({ ...props, role: 'DELIVERY_PERSON' }, id)
   }
 }
