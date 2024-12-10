@@ -48,7 +48,7 @@ describe('Register Delivery Person', () => {
   })
 
   it('should not be able to register a delivery person when cpf already exists', async () => {
-    const deliveryPerson = await makeDeliveryPersonFactory({
+    const deliveryPerson = makeDeliveryPersonFactory({
       cpf: '12345678910',
     })
 

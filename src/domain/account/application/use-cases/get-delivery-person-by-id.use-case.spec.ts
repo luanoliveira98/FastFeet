@@ -14,7 +14,7 @@ describe('Get Delivery Person By Id', () => {
   })
 
   it('should be able to get a delivery person', async () => {
-    const deliveryPerson = await makeDeliveryPersonFactory()
+    const deliveryPerson = makeDeliveryPersonFactory()
 
     inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
@@ -29,7 +29,7 @@ describe('Get Delivery Person By Id', () => {
   })
 
   it('should not be able to get a delivery person when id does not exists', async () => {
-    const deliveryPerson = await makeDeliveryPersonFactory()
+    const deliveryPerson = makeDeliveryPersonFactory()
 
     inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
