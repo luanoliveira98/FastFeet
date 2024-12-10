@@ -6,6 +6,14 @@ export class InMemoryDeliveryPeopleRepository
 {
   public items: DeliveryPerson[] = []
 
+  async findById(id: string): Promise<DeliveryPerson | null> {
+    const deliveryPerson = this.items.find((item) => item.id.toString() === id)
+
+    if (!deliveryPerson) return null
+
+    return deliveryPerson
+  }
+
   async findByCpf(cpf: string): Promise<DeliveryPerson | null> {
     const deliveryPerson = this.items.find((item) => item.cpf === cpf)
 
