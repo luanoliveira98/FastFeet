@@ -29,7 +29,7 @@ export function makeDeliveryPersonFactory(
 export class DeliveryPersonFactory {
   constructor(private readonly prisma: PrismaService) {}
 
-  async makePrismaAdmin(
+  async makePrismaDeliveryPerson(
     data: Partial<DeliveryPersonProps> = {},
   ): Promise<DeliveryPerson> {
     const deliveryPerson = makeDeliveryPersonFactory(data)

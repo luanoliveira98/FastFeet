@@ -32,21 +32,17 @@ export class EditDeliveryPersonUseCase {
 
     if (!deliveryPerson) return left(new ResourceNotFoundError())
 
-    const deliveryPersonWithSameCpf =
-      await this.deliveryPeopleRepository.findByCpf(cpf)
+    if (cpf !== deliveryPerson.cpf) {
+      const deliveryPersonWithSameCpf =
+        await this.deliveryPeopleRepository.findByCpf(cpf)
 
-    const isSameCpfAndDifferentDeliveryPerson =
-      deliveryPersonWithSameCpf &&
-      !deliveryPersonWithSameCpf.equals(deliveryPerson)
+      const isSameCpfAndDifferentDeliveryPerson =
+        deliveryPersonWithSameCpf &&
+        !deliveryPersonWithSameCpf.equals(deliveryPerson)
 
-    console.log(
-      isSameCpfAndDifferentDeliveryPerson,
-      deliveryPersonWithSameCpf,
-      deliveryPerson,
-    )
-
-    if (isSameCpfAndDifferentDeliveryPerson)
-      return left(new DeliveryPersonAlreadyExistsError(cpf))
+      if (isSameCpfAndDifferentDeliveryPerson)
+        return left(new DeliveryPersonAlreadyExistsError(cpf))
+    }
 
     deliveryPerson.name = name
     deliveryPerson.cpf = cpf

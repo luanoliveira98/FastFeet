@@ -6,18 +6,20 @@ import { AdminFactory } from 'test/factories/make-admin.factory'
 import { DatabaseModule } from '@/infra/database/database.module'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { DeliveryPersonFactory } from 'test/factories/make-delivery-person.factory'
 
-describe('Create Account (E2E)', () => {
+describe('Edit Account (E2E)', () => {
   let app: INestApplication
   let jwt: JwtService
   let prisma: PrismaService
 
   let adminFactory: AdminFactory
+  let deliveryPersonFactory: DeliveryPersonFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [AdminFactory],
+      providers: [AdminFactory, DeliveryPersonFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
@@ -26,6 +28,7 @@ describe('Create Account (E2E)', () => {
     prisma = moduleRef.get(PrismaService)
 
     adminFactory = moduleRef.get(AdminFactory)
+    deliveryPersonFactory = moduleRef.get(DeliveryPersonFactory)
 
     await app.init()
   })
@@ -34,56 +37,30 @@ describe('Create Account (E2E)', () => {
     await app.close()
   })
 
-  test('[POST] /accounts', async () => {
+  test('[POST] /accounts/:id', async () => {
     const user = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({ sub: user.id.toString(), role: user.role })
 
-    const deliveryPerson = {
-      name: 'John Doe',
-      cpf: '12345678910',
-      password: '123456',
-    }
+    const deliveryPerson =
+      await deliveryPersonFactory.makePrismaDeliveryPerson()
+
+    const deliveryPersonId = deliveryPerson.id.toString()
 
     const response = await request(app.getHttpServer())
-      .post('/accounts')
+      .put(`/accounts/${deliveryPersonId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send(deliveryPerson)
+      .send({
+        cpf: deliveryPerson.cpf,
+        name: 'John Doe',
+      })
 
-    expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(204)
 
     const deliveryPersonOnDatabase = await prisma.user.findFirst({
-      where: { cpf: deliveryPerson.cpf },
+      where: { name: 'John Doe' },
     })
 
     expect(deliveryPersonOnDatabase).toBeTruthy()
-  })
-
-  test('[POST] /accounts (unauthorized)', async () => {
-    const user = await adminFactory.makePrismaAdmin()
-
-    const accessToken = jwt.sign({
-      sub: user.id.toString(),
-      role: 'DELIVERY_PERSON',
-    })
-
-    const deliveryPerson = {
-      name: 'John Doe 2',
-      cpf: '12345678911',
-      password: '123456',
-    }
-
-    const response = await request(app.getHttpServer())
-      .post('/accounts')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send(deliveryPerson)
-
-    expect(response.statusCode).toBe(401)
-
-    const deliveryPersonOnDatabase = await prisma.user.findFirst({
-      where: { cpf: deliveryPerson.cpf },
-    })
-
-    expect(deliveryPersonOnDatabase).toBeNull()
   })
 })
