@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { DeliveryPersonFactory } from 'test/factories/make-delivery-person.factory'
 
-describe('Edit Account (E2E)', () => {
+describe('Get Account By Id (E2E)', () => {
   let app: INestApplication
   let jwt: JwtService
   let prisma: PrismaService
@@ -37,7 +37,7 @@ describe('Edit Account (E2E)', () => {
     await app.close()
   })
 
-  test('[PUT] /accounts/:id', async () => {
+  test('[GET] /accounts/:id', async () => {
     const user = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({ sub: user.id.toString(), role: user.role })
@@ -48,17 +48,14 @@ describe('Edit Account (E2E)', () => {
     const deliveryPersonId = deliveryPerson.id.toString()
 
     const response = await request(app.getHttpServer())
-      .put(`/accounts/${deliveryPersonId}`)
+      .get(`/accounts/${deliveryPersonId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        cpf: deliveryPerson.cpf,
-        name: 'John Doe',
-      })
+      .send()
 
-    expect(response.statusCode).toBe(204)
+    expect(response.statusCode).toBe(200)
 
     const deliveryPersonOnDatabase = await prisma.user.findFirst({
-      where: { name: 'John Doe' },
+      where: { cpf: deliveryPerson.cpf },
     })
 
     expect(deliveryPersonOnDatabase).toBeTruthy()

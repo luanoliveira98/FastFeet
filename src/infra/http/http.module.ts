@@ -7,6 +7,8 @@ import { CreateAccountController } from './controllers/create-account.controller
 import { RegisterDeliveryPersonUseCase } from '@/domain/account/application/use-cases/register-delivery-person.use-case'
 import { EditAccountController } from './controllers/edit-account.controller'
 import { EditDeliveryPersonUseCase } from '@/domain/account/application/use-cases/edit-delivery-person.use-case'
+import { GetAccountByIdController } from './controllers/get-account-by-id.controller'
+import { GetDeliveryPersonByIdUseCase } from '@/domain/account/application/use-cases/get-delivery-person-by-id.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -14,11 +16,13 @@ import { EditDeliveryPersonUseCase } from '@/domain/account/application/use-case
     AuthenticateController,
     CreateAccountController,
     EditAccountController,
+    GetAccountByIdController,
   ],
   providers: [
     AuthenticateUserUseCase,
     RegisterDeliveryPersonUseCase,
     EditDeliveryPersonUseCase,
+    GetDeliveryPersonByIdUseCase,
   ],
 })
 export class HttpModule {}
