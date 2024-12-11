@@ -1,26 +1,27 @@
 import {
   BadRequestException,
   Controller,
-  Get,
+  Delete,
+  HttpCode,
   NotFoundException,
   Param,
   UseGuards,
 } from '@nestjs/common'
 import { AdminAuthGuard } from '@/infra/auth/guard/admin-auth.guard'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { GetDeliveryPersonByIdUseCase } from '@/domain/account/application/use-cases/get-delivery-person-by-id.use-case'
-import { DeliveryPersonPresenter } from '../presenters/delivery-person.presenter'
+import { DeleteDeliveryPersonUseCase } from '@/domain/account/application/use-cases/delete-delivery-person.use-case'
 
 @Controller('/accounts/:id')
-export class GetAccountByIdController {
+export class DeleteAccountController {
   constructor(
-    private readonly getDeliveryPersonById: GetDeliveryPersonByIdUseCase,
+    private readonly deleteDeliveryPerson: DeleteDeliveryPersonUseCase,
   ) {}
 
-  @Get()
+  @Delete()
+  @HttpCode(204)
   @UseGuards(AdminAuthGuard)
   async handle(@Param('id') deliveryPersonId: string) {
-    const result = await this.getDeliveryPersonById.execute({
+    const result = await this.deleteDeliveryPerson.execute({
       id: deliveryPersonId,
     })
 
@@ -33,10 +34,6 @@ export class GetAccountByIdController {
         default:
           throw new BadRequestException(error.message)
       }
-    }
-
-    return {
-      account: DeliveryPersonPresenter.toHttp(result.value.deliveryPerson),
     }
   }
 }

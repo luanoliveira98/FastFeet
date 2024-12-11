@@ -5,11 +5,13 @@ import request from 'supertest'
 import { AdminFactory } from 'test/factories/make-admin.factory'
 import { DatabaseModule } from '@/infra/database/database.module'
 import { JwtService } from '@nestjs/jwt'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { DeliveryPersonFactory } from 'test/factories/make-delivery-person.factory'
 
-describe('Get Account By Id (E2E)', () => {
+describe('Delete Account (E2E)', () => {
   let app: INestApplication
   let jwt: JwtService
+  let prisma: PrismaService
 
   let adminFactory: AdminFactory
   let deliveryPersonFactory: DeliveryPersonFactory
@@ -23,6 +25,7 @@ describe('Get Account By Id (E2E)', () => {
     app = moduleRef.createNestApplication()
 
     jwt = moduleRef.get(JwtService)
+    prisma = moduleRef.get(PrismaService)
 
     adminFactory = moduleRef.get(AdminFactory)
     deliveryPersonFactory = moduleRef.get(DeliveryPersonFactory)
@@ -34,7 +37,7 @@ describe('Get Account By Id (E2E)', () => {
     await app.close()
   })
 
-  test('[GET] /accounts/:id', async () => {
+  test('[DELETE] /accounts/:id', async () => {
     const user = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({ sub: user.id.toString(), role: user.role })
@@ -45,18 +48,16 @@ describe('Get Account By Id (E2E)', () => {
     const deliveryPersonId = deliveryPerson.id.toString()
 
     const response = await request(app.getHttpServer())
-      .get(`/accounts/${deliveryPersonId}`)
+      .delete(`/accounts/${deliveryPersonId}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send()
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(204)
 
-    expect(response.body).toEqual({
-      account: {
-        deliveryPersonId: deliveryPerson.id.toString(),
-        cpf: deliveryPerson.cpf,
-        name: deliveryPerson.name,
-      },
+    const deliveryPersonOnDatabase = await prisma.user.findFirst({
+      where: { name: 'John Doe' },
     })
+
+    expect(deliveryPersonOnDatabase).toBeNull()
   })
 })
