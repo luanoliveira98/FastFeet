@@ -6,7 +6,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 
 - [x] The application must have two types of user, delivery person and/or admin
 - [x] It must be possible to log in with CPF and password
-- [ ] It must be possible to perform CRUD of delivery people
+- [x] It must be possible to perform CRUD of delivery people
 - [ ] It must be possible to perform CRUD of orders
 - [ ] It must be possible to perform CRUD of recipients
 - [ ] It must be possible to mark an order as waiting (avaiable to pickup)
