@@ -12,29 +12,31 @@ describe('Authenticate (E2E)', () => {
   let adminFactory: AdminFactory
 
   beforeAll(async () => {
-    const moduleRed = await Test.createTestingModule({
+    const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
       providers: [AdminFactory],
     }).compile()
 
-    app = moduleRed.createNestApplication()
+    app = moduleRef.createNestApplication()
 
-    adminFactory = moduleRed.get(AdminFactory)
+    adminFactory = moduleRef.get(AdminFactory)
 
     await app.init()
   })
 
+  afterAll(async () => {
+    await app.close()
+  })
+
   test('[POST] /sessions', async () => {
-    const cpf = '12345678910'
     const password = '123456'
 
-    await adminFactory.makePrismaAdmin({
-      cpf,
+    const user = await adminFactory.makePrismaAdmin({
       password: await hash(password, 8),
     })
 
     const response = await request(app.getHttpServer()).post('/sessions').send({
-      cpf,
+      cpf: user.cpf,
       password,
     })
 

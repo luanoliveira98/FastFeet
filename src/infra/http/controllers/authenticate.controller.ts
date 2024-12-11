@@ -1,5 +1,5 @@
 import { AuthenticateUserUseCase } from '@/domain/account/application/use-cases/authenticate-user.use-case'
-import { Public } from '@/infra/auth/public'
+import { Public } from '@/infra/auth/guard/public'
 import {
   BadRequestException,
   Body,
@@ -12,12 +12,12 @@ import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 import { WrongCredentialsError } from '@/domain/account/application/use-cases/errors/wrong-credentials.error'
 
-const authenticateBodySchema = z.object({
+const bodySchema = z.object({
   cpf: z.string(),
   password: z.string(),
 })
 
-type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
+type BodySchema = z.infer<typeof bodySchema>
 
 @Controller('/sessions')
 export class AuthenticateController {
@@ -25,8 +25,8 @@ export class AuthenticateController {
 
   @Post()
   @Public()
-  @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handle(@Body() body: AuthenticateBodySchema) {
+  @UsePipes(new ZodValidationPipe(bodySchema))
+  async handle(@Body() body: BodySchema) {
     const { cpf, password } = body
 
     const result = await this.authenticateUser.execute({ cpf, password })

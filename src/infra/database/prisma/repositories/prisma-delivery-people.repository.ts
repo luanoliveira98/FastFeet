@@ -19,4 +19,32 @@ export class PrismaDevelieryPeopleRepository
 
     return PrismaDeliveryPersonMapper.toDomain(deliveryPerson)
   }
+
+  async findById(id: string): Promise<DeliveryPerson | null> {
+    const deliveryPerson = await this.prisma.user.findUnique({
+      where: { id, role: 'DELIVERY_PERSON' },
+    })
+
+    if (!deliveryPerson) return null
+
+    return PrismaDeliveryPersonMapper.toDomain(deliveryPerson)
+  }
+
+  async create(deliveryPerson: DeliveryPerson): Promise<void> {
+    const data = PrismaDeliveryPersonMapper.toPrisma(deliveryPerson)
+
+    await this.prisma.user.create({ data })
+  }
+
+  async save(deliveryPerson: DeliveryPerson): Promise<void> {
+    const data = PrismaDeliveryPersonMapper.toPrisma(deliveryPerson)
+
+    await this.prisma.user.update({ where: { id: data.id }, data })
+  }
+
+  async delete(deliveryPerson: DeliveryPerson): Promise<void> {
+    await this.prisma.user.delete({
+      where: { id: deliveryPerson.id.toString() },
+    })
+  }
 }
