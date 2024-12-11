@@ -14,67 +14,67 @@ export interface RecipientProps {
 
 export class Recipient extends Entity<RecipientProps> {
   get name() {
-    return this.name
+    return this.props.name
   }
 
   set name(name: string) {
-    this.name = name
+    this.props.name = name
   }
 
   get street() {
-    return this.street
+    return this.props.street
   }
 
   set street(street: string) {
-    this.street = street
+    this.props.street = street
   }
 
   get number() {
-    return this.number
+    return this.props.number
   }
 
   set number(number: number) {
-    this.number = number
+    this.props.number = number
   }
 
   get complement() {
-    return this.complement
+    return this.props.complement
   }
 
   set complement(complement: string) {
-    this.complement = complement
+    this.props.complement = complement
   }
 
   get neighborhood() {
-    return this.neighborhood
+    return this.props.neighborhood
   }
 
   set neighborhood(neighborhood: string) {
-    this.neighborhood = neighborhood
+    this.props.neighborhood = neighborhood
   }
 
   get city() {
-    return this.city
+    return this.props.city
   }
 
   set city(city: string) {
-    this.city = city
+    this.props.city = city
   }
 
   get state() {
-    return this.state
+    return this.props.state
   }
 
   set state(state: string) {
-    this.state = state
+    this.props.state = state
   }
 
   get zipcode() {
-    return this.zipcode
+    return this.props.zipcode
   }
 
   set zipcode(zipcode: string) {
-    this.zipcode = zipcode
+    this.props.zipcode = zipcode
   }
 
   static create(props: RecipientProps, id?: UniqueEntityID) {
