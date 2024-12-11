@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/value-objects/unique-entity-id'
+import { UniqueEntityID } from '@/core/entities/value-objects/unique-entity-id.value-object'
 import { DeliveryPerson } from '@/domain/account/enterprise/entities/delivery-person.entity'
 import { User as PrismaUser, Prisma } from '@prisma/client'
 

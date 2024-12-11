@@ -1,4 +1,4 @@
-import { UniqueEntityID } from './value-objects/unique-entity-id'
+import { UniqueEntityID } from './value-objects/unique-entity-id.value-object'
 
 export abstract class Entity<Props> {
   private _id: UniqueEntityID
