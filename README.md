@@ -19,7 +19,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 
 ## Business Rules
 
-- [ ] Only admin users can perform CRUD operations on delivery people
+- [x] Only admin users can perform CRUD operations on delivery people
 - [ ] Only admin users can perform CRUD operations on orders
 - [ ] Only admin users can perform CRUD operations on recipients
 - [ ] To mark an order as delivered, it is mandatory to send a photo
