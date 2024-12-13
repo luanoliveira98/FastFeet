@@ -7,9 +7,9 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] The application must have two types of user, delivery person and/or admin
 - [x] It must be possible to log in with CPF and password
 - [x] It must be possible to perform CRUD of delivery people
-- [ ] It must be possible to perform CRUD of orders
+- [x] It must be possible to perform CRUD of orders
 - [x] It must be possible to perform CRUD of customers
-- [ ] It must be possible to mark an order as waiting (avaiable to pickup)
+- [x] It must be possible to mark an order as waiting (avaiable to pickup)
 - [ ] It must be possible to pick up an order
 - [ ] It must be possible to mark an order as delivered
 - [ ] It must be possible to list orders with delivery addresses close to the delivery person's location
@@ -20,7 +20,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 ## Business Rules
 
 - [x] Only admin users can perform CRUD operations on delivery people
-- [ ] Only admin users can perform CRUD operations on orders
+- [x] Only admin users can perform CRUD operations on orders
 - [x] Only admin users can perform CRUD operations on customers
 - [ ] To mark an order as delivered, it is mandatory to send a photo
 - [ ] Only the delivery person who picked up the order can mark it as delivered
