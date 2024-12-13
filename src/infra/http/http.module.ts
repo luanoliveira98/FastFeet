@@ -23,6 +23,8 @@ import { CreateOrderController } from './controllers/create-order.controller'
 import { RegisterOrderUseCase } from '@/domain/delivery/application/use-cases/register-order.use-case'
 import { DeleteOrderController } from './controllers/delete-order.controller'
 import { DeleteOrderUseCase } from '@/domain/delivery/application/use-cases/delete-order.use-case'
+import { GetOrderByIdController } from './controllers/get-order-by-id.controller'
+import { GetOrderByIdUseCase } from '@/domain/delivery/application/use-cases/get-order-by-id.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -37,6 +39,7 @@ import { DeleteOrderUseCase } from '@/domain/delivery/application/use-cases/dele
     GetRecipientByIdController,
     DeleteRecipientController,
     CreateOrderController,
+    GetOrderByIdController,
     DeleteOrderController,
   ],
   providers: [
@@ -50,6 +53,7 @@ import { DeleteOrderUseCase } from '@/domain/delivery/application/use-cases/dele
     GetRecipientByIdUseCase,
     DeleteRecipientUseCase,
     RegisterOrderUseCase,
+    GetOrderByIdUseCase,
     DeleteOrderUseCase,
   ],
 })
