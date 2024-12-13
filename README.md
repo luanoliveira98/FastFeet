@@ -24,7 +24,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] Only admin users can perform CRUD operations on customers
 - [ ] To mark an order as delivered, it is mandatory to send a photo
 - [ ] Only the delivery person who picked up the order can mark it as delivered
-- [ ] Only the admin can chan a user's password
+- [ ] Only the admin can change a user's password
 - [ ] It should not be possible a delivery person to list the orders of another delivery person
 
 ## Concepts to practice
