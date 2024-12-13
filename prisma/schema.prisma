@@ -40,7 +40,7 @@ model Address {
   zipcode      String
   recipientId  String  @unique @map("recipient_id")
 
-  recipient Recipient @relation(fields: [recipientId], references: [id])
+  recipient Recipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
 
   @@map("addresses")
 }
