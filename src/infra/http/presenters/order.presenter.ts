@@ -5,7 +5,7 @@ export class OrderPresenter {
     return {
       orderId: order.id.toString(),
       recipientId: order.recipientId.toString(),
-      deliveryPersonId: order.deliveryPersonId.toString(),
+      deliveryPersonId: order.deliveryPersonId?.toString(),
       status: order.status,
       storedAt: order.storedAt,
       postedAt: order.postedAt,

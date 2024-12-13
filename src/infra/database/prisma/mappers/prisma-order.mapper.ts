@@ -7,7 +7,9 @@ export class PrismaOrderMapper {
     return Order.create(
       {
         recipientId: new UniqueEntityID(raw.recipientId),
-        deliveryPersonId: new UniqueEntityID(raw.deliveryPersonId),
+        deliveryPersonId: raw.deliveryPersonId
+          ? new UniqueEntityID(raw.deliveryPersonId)
+          : null,
         status: raw.status,
         storedAt: raw.storedAt,
         postedAt: raw.postedAt,

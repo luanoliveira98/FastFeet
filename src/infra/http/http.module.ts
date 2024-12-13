@@ -25,6 +25,8 @@ import { DeleteOrderController } from './controllers/delete-order.controller'
 import { DeleteOrderUseCase } from '@/domain/delivery/application/use-cases/delete-order.use-case'
 import { GetOrderByIdController } from './controllers/get-order-by-id.controller'
 import { GetOrderByIdUseCase } from '@/domain/delivery/application/use-cases/get-order-by-id.use-case'
+import { PostOrderController } from './controllers/post-order.controller'
+import { PostOrderUseCase } from '@/domain/delivery/application/use-cases/post-order.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -39,6 +41,7 @@ import { GetOrderByIdUseCase } from '@/domain/delivery/application/use-cases/get
     GetRecipientByIdController,
     DeleteRecipientController,
     CreateOrderController,
+    PostOrderController,
     GetOrderByIdController,
     DeleteOrderController,
   ],
@@ -53,6 +56,7 @@ import { GetOrderByIdUseCase } from '@/domain/delivery/application/use-cases/get
     GetRecipientByIdUseCase,
     DeleteRecipientUseCase,
     RegisterOrderUseCase,
+    PostOrderUseCase,
     GetOrderByIdUseCase,
     DeleteOrderUseCase,
   ],
