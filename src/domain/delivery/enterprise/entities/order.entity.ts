@@ -7,7 +7,8 @@ export interface OrderProps {
   recipientId: UniqueEntityID
   deliveryPersonId?: UniqueEntityID | null
   status: OrderStatus
-  postedAt: Date
+  storedAt: Date
+  postedAt?: Date | null
   pickedUpAt?: Date | null
   deliveredAt?: Date | null
 }
@@ -33,8 +34,16 @@ export class Order extends Entity<OrderProps> {
     this.props.status = status
   }
 
+  get storedAt() {
+    return this.props.storedAt
+  }
+
   get postedAt() {
     return this.props.postedAt
+  }
+
+  set postedAt(postedAt: Date) {
+    this.props.postedAt = postedAt
   }
 
   get pickedUpAt() {
@@ -54,14 +63,14 @@ export class Order extends Entity<OrderProps> {
   }
 
   static create(
-    props: Optional<OrderProps, 'postedAt' | 'status'>,
+    props: Optional<OrderProps, 'status' | 'storedAt'>,
     id?: UniqueEntityID,
   ) {
     return new Order(
       {
         ...props,
-        status: props.status ?? 'WAITING',
-        postedAt: props.postedAt ?? new Date(),
+        status: props.status ?? 'STORED',
+        storedAt: props.postedAt ?? new Date(),
       },
       id,
     )
