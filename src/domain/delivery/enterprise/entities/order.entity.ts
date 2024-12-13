@@ -18,6 +18,10 @@ export class Order extends Entity<OrderProps> {
     return this.props.recipientId
   }
 
+  set recipientId(recipientId: UniqueEntityID) {
+    this.props.recipientId = recipientId
+  }
+
   get deliveryPersonId() {
     return this.props.deliveryPersonId
   }
@@ -36,6 +40,10 @@ export class Order extends Entity<OrderProps> {
 
   get storedAt() {
     return this.props.storedAt
+  }
+
+  set storedAt(storedAt: Date) {
+    this.props.storedAt = storedAt
   }
 
   get postedAt() {
