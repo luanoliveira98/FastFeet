@@ -27,38 +27,42 @@ import { GetOrderByIdController } from './controllers/get-order-by-id.controller
 import { GetOrderByIdUseCase } from '@/domain/delivery/application/use-cases/get-order-by-id.use-case'
 import { PostOrderController } from './controllers/post-order.controller'
 import { PostOrderUseCase } from '@/domain/delivery/application/use-cases/post-order.use-case'
+import { EditOrderController } from './controllers/edit-order.controller'
+import { EditOrderUseCase } from '@/domain/delivery/application/use-cases/edit-order.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
     AuthenticateController,
     CreateAccountController,
-    EditAccountController,
     GetAccountByIdController,
+    EditAccountController,
     DeleteAccountController,
     CreateRecipientController,
-    EditRecipientController,
     GetRecipientByIdController,
+    EditRecipientController,
     DeleteRecipientController,
     CreateOrderController,
-    PostOrderController,
     GetOrderByIdController,
+    EditOrderController,
     DeleteOrderController,
+    PostOrderController,
   ],
   providers: [
     AuthenticateUserUseCase,
     RegisterDeliveryPersonUseCase,
-    EditDeliveryPersonUseCase,
     GetDeliveryPersonByIdUseCase,
+    EditDeliveryPersonUseCase,
     DeleteDeliveryPersonUseCase,
     RegisterRecipientUseCase,
-    EditRecipientUseCase,
     GetRecipientByIdUseCase,
+    EditRecipientUseCase,
     DeleteRecipientUseCase,
     RegisterOrderUseCase,
-    PostOrderUseCase,
     GetOrderByIdUseCase,
+    EditOrderUseCase,
     DeleteOrderUseCase,
+    PostOrderUseCase,
   ],
 })
 export class HttpModule {}

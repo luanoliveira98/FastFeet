@@ -87,7 +87,9 @@ export class EditOrderUseCase {
     }
 
     order.recipientId = new UniqueEntityID(recipientId)
-    order.deliveryPersonId = new UniqueEntityID(deliveryPersonId)
+    order.deliveryPersonId = deliveryPersonId
+      ? new UniqueEntityID(deliveryPersonId)
+      : null
     order.status = status
     order.storedAt = storedAt
     order.postedAt = postedAt
