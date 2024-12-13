@@ -5,25 +5,25 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
   public items: Recipient[] = []
 
   async findById(id: string): Promise<Recipient | null> {
-    const Recipient = this.items.find((item) => item.id.toString() === id)
+    const recipient = this.items.find((item) => item.id.toString() === id)
 
-    if (!Recipient) return null
+    if (!recipient) return null
 
-    return Recipient
+    return recipient
   }
 
-  async create(Recipient: Recipient): Promise<void> {
-    this.items.push(Recipient)
+  async create(recipient: Recipient): Promise<void> {
+    this.items.push(recipient)
   }
 
-  async save(Recipient: Recipient): Promise<void> {
-    const itemIndex = this.items.findIndex((item) => item.id === Recipient.id)
+  async save(recipient: Recipient): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id === recipient.id)
 
-    this.items[itemIndex] = Recipient
+    this.items[itemIndex] = recipient
   }
 
-  async delete(Recipient: Recipient): Promise<void> {
-    const itemIndex = this.items.findIndex((item) => item.id === Recipient.id)
+  async delete(recipient: Recipient): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id === recipient.id)
 
     this.items.splice(itemIndex, 1)
   }

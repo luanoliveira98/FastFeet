@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/core/helpers/either.helper'
 import { Injectable } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { Recipient } from '../../enterprise/entities/recipient.entity'
 import { RecipientsRepository } from '../repositories/recipients.repository.interface'
+import { Recipient } from '../../enterprise/entities/recipient.entity'
 
 interface EditRecipientUseCaseRequest {
   recipientId: string

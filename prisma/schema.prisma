@@ -21,3 +21,26 @@ model User {
 
   @@map("users")
 }
+
+model Recipient {
+  id      String   @id @default(uuid())
+  name    String
+  address Address?
+
+  @@map("recipients")
+}
+
+model Address {
+  street       String
+  number       Int
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  zipcode      String
+  recipientId  String  @unique @map("recipient_id")
+
+  recipient Recipient @relation(fields: [recipientId], references: [id])
+
+  @@map("addresses")
+}

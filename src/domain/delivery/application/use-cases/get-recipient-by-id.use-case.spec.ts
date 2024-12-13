@@ -29,10 +29,6 @@ describe('Get Recipient By Id', () => {
   })
 
   it('should not be able to get a recipient when id does not exists', async () => {
-    const recipient = makeRecipientFactory()
-
-    inMemoryRecipientsRepository.create(recipient)
-
     const result = await sut.execute({
       id: 'wrong-id',
     })

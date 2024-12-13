@@ -5,7 +5,7 @@ import { DeliveryPerson } from '@/domain/account/enterprise/entities/delivery-pe
 import { PrismaDeliveryPersonMapper } from '../mappers/prisma-delivery-person.mapper'
 
 @Injectable()
-export class PrismaDevelieryPeopleRepository
+export class PrismaDeliveryPeopleRepository
   implements DeliveryPeopleRepository
 {
   constructor(protected readonly prisma: PrismaService) {}

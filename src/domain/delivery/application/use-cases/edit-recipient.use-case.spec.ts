@@ -34,6 +34,7 @@ describe('Edit Recipient', () => {
     expect(result.value).toEqual({
       recipient: expect.objectContaining({
         name: 'John Doe',
+        complement: 'Complement',
       }),
     })
   })

@@ -8,7 +8,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] It must be possible to log in with CPF and password
 - [x] It must be possible to perform CRUD of delivery people
 - [ ] It must be possible to perform CRUD of orders
-- [ ] It must be possible to perform CRUD of customers
+- [x] It must be possible to perform CRUD of customers
 - [ ] It must be possible to mark an order as waiting (avaiable to pickup)
 - [ ] It must be possible to pick up an order
 - [ ] It must be possible to mark an order as delivered
