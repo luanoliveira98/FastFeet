@@ -10,7 +10,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] It must be possible to perform CRUD of orders
 - [x] It must be possible to perform CRUD of customers
 - [x] It must be possible to mark an order as waiting (avaiable to pickup)
-- [ ] It must be possible to pick up an order
+- [x] It must be possible to pick up an order
 - [ ] It must be possible to mark an order as delivered
 - [ ] It must be possible to list orders with delivery addresses close to the delivery person's location
 - [ ] It must be possible to change a user's password
