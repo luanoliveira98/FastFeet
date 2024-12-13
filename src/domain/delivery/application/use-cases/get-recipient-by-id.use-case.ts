@@ -2,7 +2,6 @@ import { Either, left, right } from '@/core/helpers/either.helper'
 import { Injectable } from '@nestjs/common'
 import { RecipientsRepository } from '../repositories/recipients.repository.interface'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { RecipienDoesNotHaveAddressError } from './errors/recipient-does-not-have-address.error'
 import { Recipient } from '../../enterprise/entities/recipient.entity'
 
 interface GetRecipientByIdUseCaseRequest {
@@ -10,7 +9,7 @@ interface GetRecipientByIdUseCaseRequest {
 }
 
 type GetRecipientByIdUseCaseReponse = Either<
-  ResourceNotFoundError | RecipienDoesNotHaveAddressError,
+  ResourceNotFoundError,
   { recipient: Recipient }
 >
 

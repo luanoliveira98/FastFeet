@@ -25,6 +25,7 @@ export class PrismaRecipientMapper {
     recipient: Recipient,
   ): Prisma.RecipientUncheckedCreateInput {
     return {
+      id: recipient.id.toString(),
       name: recipient.name,
       address: {
         create: {
@@ -44,7 +45,6 @@ export class PrismaRecipientMapper {
     recipient: Recipient,
   ): Prisma.RecipientUncheckedUpdateInput {
     return {
-      id: recipient.id.toString(),
       name: recipient.name,
       address: {
         update: {
