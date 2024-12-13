@@ -43,7 +43,7 @@ describe('PickUp Order', () => {
     expect(result.value).toEqual({
       order: expect.objectContaining({
         deliveryPersonId: deliveryPerson.id,
-        status: 'PICKED UP',
+        status: 'PICKED_UP',
         pickedUpAt: expect.any(Date),
       }),
     })

@@ -1,1 +1,1 @@
-export type OrderStatus = 'STORED' | 'WAITING' | 'PICKED UP' | 'DELIVERED'
+export type OrderStatus = 'STORED' | 'WAITING' | 'PICKED_UP' | 'DELIVERED'

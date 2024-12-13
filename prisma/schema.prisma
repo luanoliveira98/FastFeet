@@ -18,6 +18,7 @@ model User {
   cpf      String   @unique
   password String
   role     UserRole @default(DELIVERY_PERSON)
+  orders   Order[]
 
   @@map("users")
 }
@@ -26,6 +27,7 @@ model Recipient {
   id      String   @id @default(uuid())
   name    String
   address Address?
+  orders  Order[]
 
   @@map("recipients")
 }
@@ -43,4 +45,27 @@ model Address {
   recipient Recipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
 
   @@map("addresses")
+}
+
+enum OrderStatus {
+  STORED
+  WAITING
+  PICKED_UP
+  DELIVERED
+}
+
+model Order {
+  id               String      @id @default(uuid())
+  recipientId      String      @map("recipient_id")
+  deliveryPersonId String?     @map("delivery_person_id")
+  status           OrderStatus
+  storedAt         DateTime    @default(now())
+  postedAt         DateTime?
+  pickedUpAt       DateTime?
+  deliveredAt      DateTime?
+
+  deliveryPerson User?     @relation(fields: [deliveryPersonId], references: [id])
+  recipient      Recipient @relation(fields: [recipientId], references: [id])
+
+  @@map("orders")
 }
