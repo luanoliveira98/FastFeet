@@ -23,7 +23,10 @@ describe('PickUp Order', () => {
   })
 
   it('should be able to pick-up an order', async () => {
-    const order = makeOrderFactory()
+    const order = makeOrderFactory({
+      status: 'WAITING',
+      postedAt: new Date(),
+    })
 
     inMemoryOrdersRepository.create(order)
 

@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { OrdersRepository } from '../repositories/orders.repository.interface'
 import { Order } from '../../enterprise/entities/order.entity'
+import { InvalidOrderError } from './errors/invalid-order.error'
 
 interface PostOrderUseCaseRequest {
   orderId: string
@@ -20,6 +21,10 @@ export class PostOrderUseCase {
     const order = await this.ordersRepository.findById(orderId)
 
     if (!order) return left(new ResourceNotFoundError())
+
+    const isValidOrder = order.status === 'STORED'
+
+    if (!isValidOrder) return left(new InvalidOrderError())
 
     order.status = 'WAITING'
     order.postedAt = new Date()

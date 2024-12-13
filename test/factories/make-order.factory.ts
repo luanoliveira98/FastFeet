@@ -12,8 +12,8 @@ export function makeOrderFactory(
   const order = Order.create(
     {
       recipientId: new UniqueEntityID(faker.string.uuid()),
-      status: 'WAITING',
-      postedAt: faker.date.past(),
+      status: 'STORED',
+      storedAt: faker.date.past(),
       ...override,
     },
     id,

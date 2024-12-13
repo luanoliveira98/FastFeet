@@ -2,6 +2,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { PostOrderUseCase } from './post-order.use-case'
 import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders.repository'
 import { makeOrderFactory } from 'test/factories/make-order.factory'
+import { InvalidOrderError } from './errors/invalid-order.error'
 
 describe('Post Order', () => {
   let sut: PostOrderUseCase
@@ -14,7 +15,7 @@ describe('Post Order', () => {
   })
 
   it('should be able to post an order', async () => {
-    const order = makeOrderFactory()
+    const order = makeOrderFactory({})
 
     inMemoryOrdersRepository.create(order)
 
@@ -38,5 +39,20 @@ describe('Post Order', () => {
 
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+  })
+
+  it('should not be able to post an order when order is no longer stored', async () => {
+    const order = makeOrderFactory({
+      status: 'WAITING',
+    })
+
+    inMemoryOrdersRepository.create(order)
+
+    const result = await sut.execute({
+      orderId: order.id.toString(),
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(InvalidOrderError)
   })
 })
