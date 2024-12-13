@@ -15,6 +15,8 @@ import { CreateRecipientController } from './controllers/create-recipient.contro
 import { RegisterRecipientUseCase } from '@/domain/delivery/application/use-cases/register-recipient.use-case'
 import { GetRecipientByIdController } from './controllers/get-recipient-by-id.controller'
 import { GetRecipientByIdUseCase } from '@/domain/delivery/application/use-cases/get-recipient-by-id.use-case'
+import { EditRecipientController } from './controllers/edit-recipient.controller'
+import { EditRecipientUseCase } from '@/domain/delivery/application/use-cases/edit-recipient.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -25,6 +27,7 @@ import { GetRecipientByIdUseCase } from '@/domain/delivery/application/use-cases
     GetAccountByIdController,
     DeleteAccountController,
     CreateRecipientController,
+    EditRecipientController,
     GetRecipientByIdController,
   ],
   providers: [
@@ -34,6 +37,7 @@ import { GetRecipientByIdUseCase } from '@/domain/delivery/application/use-cases
     GetDeliveryPersonByIdUseCase,
     DeleteDeliveryPersonUseCase,
     RegisterRecipientUseCase,
+    EditRecipientUseCase,
     GetRecipientByIdUseCase,
   ],
 })
