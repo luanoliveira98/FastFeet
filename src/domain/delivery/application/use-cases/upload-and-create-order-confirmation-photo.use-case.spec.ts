@@ -1,7 +1,7 @@
 import { InMemoryOrderConfirmationPhotosRepository } from 'test/repositories/in-memory-order-confirmation-photos.repository'
 import { UploadAndCreateOrderConfirmationPhotoUseCase } from './upload-and-create-order-confirmation-photo.use-case'
 import { UploaderFake } from 'test/storage/uploader.fake'
-import { InvalidOrderConfirmationPhotoTypeError } from './errors/invalid-order-confirmation-photo.error'
+import { InvalidOrderConfirmationPhotoTypeError } from './errors/invalid-order-confirmation-photo-type.error'
 
 describe('Upload and Create Order Confirmation Photo', () => {
   let sut: UploadAndCreateOrderConfirmationPhotoUseCase

@@ -1,10 +1,7 @@
 import { UseCaseError } from '@/core/errors/use-case-error.interface'
 
-export class InvalidOrderConfirmationPhotoTypeError
-  extends Error
-  implements UseCaseError
-{
-  constructor(type: string) {
-    super(`File type "${type}" is not valid.`)
+export class InvalidOrderConfirmationPhotoError extends Error implements UseCaseError {
+  constructor() {
+    super('Invalid order confirmation photo')
   }
 }

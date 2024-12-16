@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/helpers/either.helper'
 import { Injectable } from '@nestjs/common'
 import { Uploader } from '../storage/uploader.interface'
-import { InvalidOrderConfirmationPhotoTypeError } from './errors/invalid-order-confirmation-photo.error'
+import { InvalidOrderConfirmationPhotoTypeError } from './errors/invalid-order-confirmation-photo-type.error'
 import { OrderConfirmationPhotosRepository } from '../repositories/order-confirmation-photos.repository.interface'
 import { OrderConfirmationPhoto } from '../../enterprise/entities/order-confirmation-photo.entity'
 

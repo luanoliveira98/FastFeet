@@ -9,6 +9,7 @@ export class PrismaOrderConfirmationPhotoMapper {
   static toDomain(raw: PrismaOrderConfirmationPhoto) {
     return OrderConfirmationPhoto.create(
       {
+        orderId: new UniqueEntityID(raw.orderId),
         title: raw.title,
         url: raw.url,
       },
@@ -21,6 +22,7 @@ export class PrismaOrderConfirmationPhotoMapper {
   ): Prisma.OrderConfirmationPhotoUncheckedCreateInput {
     return {
       id: orderConfirmationPhoto.id.toString(),
+      orderId: orderConfirmationPhoto.orderId?.toString(),
       title: orderConfirmationPhoto.title,
       url: orderConfirmationPhoto.url,
     }
