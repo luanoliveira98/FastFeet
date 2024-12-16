@@ -1,15 +1,18 @@
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Either, left, right } from '@/core/helpers/either.helper'
 import { Injectable } from '@nestjs/common'
-import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { OrdersRepository } from '../repositories/orders.repository.interface'
 import { Order } from '../../enterprise/entities/order.entity'
+import { OrdersRepository } from '../repositories/orders.repository.interface'
 import { InvalidOrderError } from './errors/invalid-order.error'
 
 interface PostOrderUseCaseRequest {
   orderId: string
 }
 
-type PostOrderUseCaseReponse = Either<ResourceNotFoundError, { order: Order }>
+type PostOrderUseCaseReponse = Either<
+  ResourceNotFoundError | InvalidOrderError,
+  { order: Order }
+>
 
 @Injectable()
 export class PostOrderUseCase {
