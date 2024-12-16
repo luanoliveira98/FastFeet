@@ -31,9 +31,12 @@ import { EditOrderController } from './controllers/edit-order.controller'
 import { EditOrderUseCase } from '@/domain/delivery/application/use-cases/edit-order.use-case'
 import { PickUpOrderController } from './controllers/pick-up-order.controller'
 import { PickUpOrderUseCase } from '@/domain/delivery/application/use-cases/pick-up-order.use-case'
+import { UploadAndCreateOrderConfirmationPhotoUseCase } from '@/domain/delivery/application/use-cases/upload-and-create-order-confirmation-photo.use-case'
+import { UploadOrderConfirmationPhotoController } from './controllers/upload-order-confirmation-photo.controller'
+import { StorageModule } from '../storage/storage.module'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     AuthenticateController,
     CreateAccountController,
@@ -50,6 +53,7 @@ import { PickUpOrderUseCase } from '@/domain/delivery/application/use-cases/pick
     DeleteOrderController,
     PostOrderController,
     PickUpOrderController,
+    UploadOrderConfirmationPhotoController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -67,6 +71,7 @@ import { PickUpOrderUseCase } from '@/domain/delivery/application/use-cases/pick
     DeleteOrderUseCase,
     PostOrderUseCase,
     PickUpOrderUseCase,
+    UploadAndCreateOrderConfirmationPhotoUseCase,
   ],
 })
 export class HttpModule {}

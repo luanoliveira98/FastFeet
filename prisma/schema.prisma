@@ -13,19 +13,21 @@ enum UserRole {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id       String @id @default(uuid())
   name     String
-  cpf      String   @unique
+  cpf      String @unique
   password String
-  role     UserRole @default(DELIVERY_PERSON)
-  orders   Order[]
+
+  role   UserRole @default(DELIVERY_PERSON)
+  orders Order[]
 
   @@map("users")
 }
 
 model Recipient {
-  id      String   @id @default(uuid())
-  name    String
+  id   String @id @default(uuid())
+  name String
+
   address Address?
   orders  Order[]
 
@@ -64,8 +66,20 @@ model Order {
   pickedUpAt       DateTime?
   deliveredAt      DateTime?
 
-  deliveryPerson User?     @relation(fields: [deliveryPersonId], references: [id])
-  recipient      Recipient @relation(fields: [recipientId], references: [id])
+  deliveryPerson          User?                    @relation(fields: [deliveryPersonId], references: [id])
+  recipient               Recipient                @relation(fields: [recipientId], references: [id])
+  orderConfirmationPhotos OrderConfirmationPhoto[]
 
   @@map("orders")
+}
+
+model OrderConfirmationPhoto {
+  id      String  @id @default(uuid())
+  title   String
+  url     String
+  orderId String? @map("order_id")
+
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@map("order_confirmation_photos")
 }
