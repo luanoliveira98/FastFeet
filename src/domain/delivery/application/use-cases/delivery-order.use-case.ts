@@ -3,12 +3,10 @@ import { Injectable } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { OrdersRepository } from '../repositories/orders.repository.interface'
 import { Order } from '../../enterprise/entities/order.entity'
-import { DeliveryPeopleRepository } from '@/domain/account/application/repositories/delivery-people.repository.interface'
 import { InvalidOrderError } from './errors/invalid-order.error'
 import { NotAllowedError } from '@/domain/account/application/use-cases/errors/not-allowed.error'
 import { OrderConfirmationPhotosRepository } from '../repositories/order-confirmation-photos.repository.interface'
 import { InvalidOrderConfirmationPhotoError } from './errors/invalid-order-confirmation-photo.error'
-import { UniqueEntityID } from '@/core/entities/value-objects/unique-entity-id.value-object'
 
 interface DeliveryOrderUseCaseRequest {
   orderId: string

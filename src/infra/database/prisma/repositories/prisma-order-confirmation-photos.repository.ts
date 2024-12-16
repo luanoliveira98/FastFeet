@@ -10,12 +10,29 @@ export class PrismaOrderConfirmationPhotosRepository
 {
   constructor(protected readonly prisma: PrismaService) {}
 
+  async findById(id: string): Promise<OrderConfirmationPhoto> {
+    const orderConfirmationPhoto = await this.prisma.orderConfirmationPhoto.findUnique({ where: { id }})
+
+    if (!orderConfirmationPhoto) return null
+
+    return PrismaOrderConfirmationPhotoMapper.toDomain(orderConfirmationPhoto)
+  }
+
   async create(orderConfirmationPhoto: OrderConfirmationPhoto): Promise<void> {
     const data = PrismaOrderConfirmationPhotoMapper.toPrisma(
       orderConfirmationPhoto,
     )
 
     await this.prisma.orderConfirmationPhoto.create({
+      data,
+    })
+  }
+
+  async save(orderConfirmationPhoto: OrderConfirmationPhoto): Promise<void> {
+    const data = PrismaOrderConfirmationPhotoMapper.toPrisma(orderConfirmationPhoto)
+  
+    await this.prisma.orderConfirmationPhoto.update({
+      where: { id: orderConfirmationPhoto.id.toString() },
       data,
     })
   }

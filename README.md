@@ -11,7 +11,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] It must be possible to perform CRUD of customers
 - [x] It must be possible to mark an order as waiting (avaiable to pickup)
 - [x] It must be possible to pick up an order
-- [ ] It must be possible to mark an order as delivered
+- [x] It must be possible to mark an order as delivered
 - [ ] It must be possible to list orders with delivery addresses close to the delivery person's location
 - [ ] It must be possible to change a user's password
 - [ ] It must be possible to list a user's deliveries
@@ -22,8 +22,8 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] Only admin users can perform CRUD operations on delivery people
 - [x] Only admin users can perform CRUD operations on orders
 - [x] Only admin users can perform CRUD operations on customers
-- [ ] To mark an order as delivered, it is mandatory to send a photo
-- [ ] Only the delivery person who picked up the order can mark it as delivered
+- [x] To mark an order as delivered, it is mandatory to send a photo
+- [x] Only the delivery person who picked up the order can mark it as delivered
 - [ ] Only the admin can change a user's password
 - [ ] It should not be possible a delivery person to list the orders of another delivery person
 

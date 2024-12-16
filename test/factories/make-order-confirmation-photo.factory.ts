@@ -11,7 +11,7 @@ export function makeOrderConfirmationPhotoFactory(
 ) {
   const order = OrderConfirmationPhoto.create(
     {
-      orderId: new UniqueEntityID(faker.string.uuid()),
+      orderId: null,
       url: faker.internet.url(),
       title: faker.word.verb(),
       ...override,
@@ -23,10 +23,10 @@ export function makeOrderConfirmationPhotoFactory(
 }
 
 @Injectable()
-export class OrderFactory {
+export class OrderConfirmationPhotoFactory {
   constructor(private readonly prisma: PrismaService) {}
 
-  async makePrismaOrder(data: Partial<OrderConfirmationPhotoProps> = {}): Promise<OrderConfirmationPhoto> {
+  async makePrismaOrderConfirmationPhoto(data: Partial<OrderConfirmationPhotoProps> = {}): Promise<OrderConfirmationPhoto> {
     const order = makeOrderConfirmationPhotoFactory(data)
 
     await this.prisma.orderConfirmationPhoto.create({

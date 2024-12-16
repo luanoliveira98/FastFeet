@@ -34,6 +34,8 @@ import { PickUpOrderUseCase } from '@/domain/delivery/application/use-cases/pick
 import { UploadAndCreateOrderConfirmationPhotoUseCase } from '@/domain/delivery/application/use-cases/upload-and-create-order-confirmation-photo.use-case'
 import { UploadOrderConfirmationPhotoController } from './controllers/upload-order-confirmation-photo.controller'
 import { StorageModule } from '../storage/storage.module'
+import { DeliveryOrderController } from './controllers/delivery-order.controller'
+import { DeliveryOrderUseCase } from '@/domain/delivery/application/use-cases/delivery-order.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -54,6 +56,7 @@ import { StorageModule } from '../storage/storage.module'
     PostOrderController,
     PickUpOrderController,
     UploadOrderConfirmationPhotoController,
+    DeliveryOrderController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -72,6 +75,7 @@ import { StorageModule } from '../storage/storage.module'
     PostOrderUseCase,
     PickUpOrderUseCase,
     UploadAndCreateOrderConfirmationPhotoUseCase,
+    DeliveryOrderUseCase,
   ],
 })
 export class HttpModule {}
