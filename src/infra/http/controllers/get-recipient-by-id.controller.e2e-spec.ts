@@ -6,6 +6,7 @@ import { AdminFactory } from 'test/factories/make-admin.factory'
 import { DatabaseModule } from '@/infra/database/database.module'
 import { JwtService } from '@nestjs/jwt'
 import { RecipientFactory } from 'test/factories/make-recipient.factory'
+import { AddressFactory } from 'test/factories/make-address.factory'
 
 describe('Get Recipient By Id (E2E)', () => {
   let app: INestApplication
@@ -13,11 +14,12 @@ describe('Get Recipient By Id (E2E)', () => {
 
   let adminFactory: AdminFactory
   let recipientFactory: RecipientFactory
+  let addressFactory: AddressFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [AdminFactory, RecipientFactory],
+      providers: [AdminFactory, RecipientFactory, AddressFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
@@ -26,6 +28,7 @@ describe('Get Recipient By Id (E2E)', () => {
 
     adminFactory = moduleRef.get(AdminFactory)
     recipientFactory = moduleRef.get(RecipientFactory)
+    addressFactory = moduleRef.get(AddressFactory)
 
     await app.init()
   })
@@ -41,6 +44,10 @@ describe('Get Recipient By Id (E2E)', () => {
 
     const recipient = await recipientFactory.makePrismaRecipient()
 
+    const address = await addressFactory.makePrismaAddress({
+      recipientId: recipient.id,
+    })
+
     const recipientId = recipient.id.toString()
 
     const response = await request(app.getHttpServer())
@@ -53,6 +60,7 @@ describe('Get Recipient By Id (E2E)', () => {
     expect(response.body).toEqual({
       recipient: expect.objectContaining({
         recipientId,
+        addressId: address.id.toString(),
       }),
     })
   })

@@ -52,7 +52,7 @@ describe('Create Account (E2E)', () => {
 
     expect(response.statusCode).toBe(201)
 
-    const deliveryPersonOnDatabase = await prisma.user.findFirst({
+    const deliveryPersonOnDatabase = await prisma.user.findUnique({
       where: { cpf: deliveryPerson.cpf },
     })
 

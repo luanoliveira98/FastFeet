@@ -54,8 +54,8 @@ describe('Delete Account (E2E)', () => {
 
     expect(response.statusCode).toBe(204)
 
-    const deliveryPersonOnDatabase = await prisma.user.findFirst({
-      where: { name: 'John Doe' },
+    const deliveryPersonOnDatabase = await prisma.user.findUnique({
+      where: { id: deliveryPersonId },
     })
 
     expect(deliveryPersonOnDatabase).toBeNull()

@@ -9,7 +9,7 @@ import {
 import { AdminAuthGuard } from '@/infra/auth/guard/admin-auth.guard'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { GetRecipientByIdUseCase } from '@/domain/delivery/application/use-cases/get-recipient-by-id.use-case'
-import { RecipientPresenter } from '../presenters/recipient.presenter'
+import { RecipientWithAddressPresenter } from '../presenters/recipient-with-address.presenter'
 
 @Controller('/recipients/:id')
 export class GetRecipientByIdController {
@@ -34,7 +34,7 @@ export class GetRecipientByIdController {
     }
 
     return {
-      recipient: RecipientPresenter.toHttp(result.value.recipient),
+      recipient: RecipientWithAddressPresenter.toHttp(result.value.recipient),
     }
   }
 }

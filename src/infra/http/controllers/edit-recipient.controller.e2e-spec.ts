@@ -7,6 +7,7 @@ import { DatabaseModule } from '@/infra/database/database.module'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { RecipientFactory } from 'test/factories/make-recipient.factory'
+import { AddressFactory } from 'test/factories/make-address.factory'
 
 describe('Edit Recipient (E2E)', () => {
   let app: INestApplication
@@ -15,11 +16,12 @@ describe('Edit Recipient (E2E)', () => {
 
   let adminFactory: AdminFactory
   let recipientFactory: RecipientFactory
+  let addressFactory: AddressFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [AdminFactory, RecipientFactory],
+      providers: [AdminFactory, RecipientFactory, AddressFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
@@ -29,6 +31,7 @@ describe('Edit Recipient (E2E)', () => {
 
     adminFactory = moduleRef.get(AdminFactory)
     recipientFactory = moduleRef.get(RecipientFactory)
+    addressFactory = moduleRef.get(AddressFactory)
 
     await app.init()
   })
@@ -43,6 +46,10 @@ describe('Edit Recipient (E2E)', () => {
     const accessToken = jwt.sign({ sub: user.id.toString(), role: user.role })
 
     const recipient = await recipientFactory.makePrismaRecipient()
+
+    await addressFactory.makePrismaAddress({
+      recipientId: recipient.id,
+    })
 
     const recipientId = recipient.id.toString()
 
@@ -61,10 +68,24 @@ describe('Edit Recipient (E2E)', () => {
 
     expect(response.statusCode).toBe(204)
 
-    const recipientOnDatabase = await prisma.recipient.findFirst({
-      where: { name: 'John Doe' },
+    const recipientOnDatabase = await prisma.recipient.findUnique({
+      where: { id: recipientId },
     })
 
-    expect(recipientOnDatabase).toBeTruthy()
+    expect(recipientOnDatabase).toEqual(
+      expect.objectContaining({
+        name: 'John Doe',
+      }),
+    )
+
+    const addressOnDatabase = await prisma.address.findUnique({
+      where: { recipientId },
+    })
+
+    expect(addressOnDatabase).toEqual(
+      expect.objectContaining({
+        neighborhood: 'Center',
+      }),
+    )
   })
 })

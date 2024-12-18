@@ -20,7 +20,7 @@ export class DeleteRecipientUseCase {
 
     if (!recipient) return left(new ResourceNotFoundError())
 
-    await this.recipientsRepository.delete(recipient)
+    await this.recipientsRepository.delete(id)
 
     return right(null)
   }

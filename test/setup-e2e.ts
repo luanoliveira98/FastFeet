@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-import { randomUUID } from 'node:crypto'
 import { config } from 'dotenv'
+import { randomUUID } from 'node:crypto'
 import { execSync } from 'node:child_process'
-import { Redis } from 'ioredis'
 import { envSchema } from '@/infra/env/env'
+import { PrismaClient } from '@prisma/client'
 
 config({ path: '.env', override: true })
 config({ path: '.env.test.local', override: true })
@@ -24,12 +23,12 @@ function generateUniqueDatabaseURL(schemaId: string) {
   return url.toString()
 }
 
-const schemaId: string = randomUUID()
+const schemaId = randomUUID()
 
 beforeAll(async () => {
   const databaseURL = generateUniqueDatabaseURL(schemaId)
 
-  env.DATABASE_URL = databaseURL
+  process.env.DATABASE_URL = databaseURL
 
   execSync('pnpm prisma migrate deploy')
 })
