@@ -81,8 +81,6 @@ export class EditOrderUseCase {
         deliveredAt,
       })
 
-      console.log(areValidDates)
-
       if (!areValidDates) return left(new InvalidDatesError())
     }
 

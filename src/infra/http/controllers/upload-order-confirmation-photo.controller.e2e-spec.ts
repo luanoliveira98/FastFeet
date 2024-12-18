@@ -41,8 +41,6 @@ describe('Upload order confirmation photo (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .attach('file', './test/e2e/sample-upload.jpg')
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(201)
     expect(response.body).toEqual({
       orderConfirmationPhotoId: expect.any(String),

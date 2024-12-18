@@ -3,6 +3,9 @@ import { Injectable } from '@nestjs/common'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { RecipientsRepository } from '../repositories/recipients.repository.interface'
 import { Recipient } from '../../enterprise/entities/recipient.entity'
+import { Address } from '../../enterprise/entities/address.entity'
+import { AddressesRepository } from '../repositories/addresses.repository.interface'
+import { RecipientWithAddress } from '../../enterprise/value-objects/recipient-with-address.value-object'
 
 interface EditRecipientUseCaseRequest {
   recipientId: string
@@ -18,12 +21,15 @@ interface EditRecipientUseCaseRequest {
 
 type EditRecipientUseCaseReponse = Either<
   ResourceNotFoundError,
-  { recipient: Recipient }
+  { recipient: RecipientWithAddress }
 >
 
 @Injectable()
 export class EditRecipientUseCase {
-  constructor(private readonly recipientsRepository: RecipientsRepository) {}
+  constructor(
+    private readonly recipientsRepository: RecipientsRepository,
+    private readonly addressesRepository: AddressesRepository,
+  ) {}
 
   async execute({
     recipientId,
@@ -36,21 +42,49 @@ export class EditRecipientUseCase {
     state,
     zipcode,
   }: EditRecipientUseCaseRequest): Promise<EditRecipientUseCaseReponse> {
-    const recipient = await this.recipientsRepository.findById(recipientId)
+    const recipientWithAddress =
+      await this.recipientsRepository.findById(recipientId)
 
-    if (!recipient) return left(new ResourceNotFoundError())
+    if (!recipientWithAddress) return left(new ResourceNotFoundError())
 
-    recipient.name = name
-    recipient.street = street
-    recipient.number = number
-    recipient.complement = complement
-    recipient.neighborhood = neighborhood
-    recipient.city = city
-    recipient.state = state
-    recipient.zipcode = zipcode
+    const recipient = Recipient.create(
+      {
+        name,
+      },
+      recipientWithAddress.recipientId,
+    )
 
     await this.recipientsRepository.save(recipient)
 
-    return right({ recipient })
+    const address = Address.create(
+      {
+        street,
+        number,
+        complement,
+        neighborhood,
+        city,
+        state,
+        zipcode,
+        recipientId: recipientWithAddress.recipientId,
+      },
+      recipientWithAddress.addressId,
+    )
+
+    await this.addressesRepository.save(address)
+
+    const recipientWithAddressEdited = RecipientWithAddress.create({
+      recipientId: recipient.id,
+      name,
+      addressId: address.id,
+      street,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      zipcode,
+    })
+
+    return right({ recipient: recipientWithAddressEdited })
   }
 }

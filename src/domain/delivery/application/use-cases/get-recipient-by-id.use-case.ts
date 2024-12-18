@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/helpers/either.helper'
 import { Injectable } from '@nestjs/common'
 import { RecipientsRepository } from '../repositories/recipients.repository.interface'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { Recipient } from '../../enterprise/entities/recipient.entity'
+import { RecipientWithAddress } from '../../enterprise/value-objects/recipient-with-address.value-object'
 
 interface GetRecipientByIdUseCaseRequest {
   id: string
@@ -10,7 +10,7 @@ interface GetRecipientByIdUseCaseRequest {
 
 type GetRecipientByIdUseCaseReponse = Either<
   ResourceNotFoundError,
-  { recipient: Recipient }
+  { recipient: RecipientWithAddress }
 >
 
 @Injectable()

@@ -2,13 +2,19 @@ import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipi
 import { makeRecipientFactory } from 'test/factories/make-recipient.factory'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { DeleteRecipientUseCase } from './delete-recipient.use-case'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
+import { makeAddressFactory } from 'test/factories/make-address.factory'
 
 describe('Delete Recipient', () => {
   let sut: DeleteRecipientUseCase
   let inMemoryRecipientsRepository: InMemoryRecipientsRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
-    inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryAddressesRepository,
+    )
 
     sut = new DeleteRecipientUseCase(inMemoryRecipientsRepository)
   })
@@ -17,6 +23,12 @@ describe('Delete Recipient', () => {
     const recipient = makeRecipientFactory()
 
     inMemoryRecipientsRepository.create(recipient)
+
+    const address = makeAddressFactory({
+      recipientId: recipient.id,
+    })
+
+    inMemoryAddressesRepository.create(address)
 
     const result = await sut.execute({
       id: recipient.id.toString(),

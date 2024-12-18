@@ -2,21 +2,36 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { EditRecipientUseCase } from './edit-recipient.use-case'
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients.repository'
 import { makeRecipientFactory } from 'test/factories/make-recipient.factory'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
+import { makeAddressFactory } from 'test/factories/make-address.factory'
 
 describe('Edit Recipient', () => {
   let sut: EditRecipientUseCase
   let inMemoryRecipientsRepository: InMemoryRecipientsRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
-    inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryAddressesRepository,
+    )
 
-    sut = new EditRecipientUseCase(inMemoryRecipientsRepository)
+    sut = new EditRecipientUseCase(
+      inMemoryRecipientsRepository,
+      inMemoryAddressesRepository,
+    )
   })
 
   it('should be able to edit a recipient', async () => {
     const recipient = makeRecipientFactory()
 
     inMemoryRecipientsRepository.create(recipient)
+
+    const address = makeAddressFactory({
+      recipientId: recipient.id,
+    })
+
+    inMemoryAddressesRepository.create(address)
 
     const result = await sut.execute({
       recipientId: recipient.id.toString(),

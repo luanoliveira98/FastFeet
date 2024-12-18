@@ -10,17 +10,23 @@ import { InvalidRecipientError } from './errors/invalid-recipient.error'
 import { InvalidDeliveryPersonError } from './errors/invalid-delivery-person.error'
 import dayjs from 'dayjs'
 import { InvalidDatesError } from './errors/invalid-dates.error'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
+import { makeAddressFactory } from 'test/factories/make-address.factory'
 
 describe('Edit Order', () => {
   let sut: EditOrderUseCase
   let inMemoryOrdersRepository: InMemoryOrdersRepository
   let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
   let inMemoryRecipientsRepository: InMemoryRecipientsRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository()
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
-    inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryAddressesRepository,
+    )
 
     sut = new EditOrderUseCase(
       inMemoryOrdersRepository,
@@ -55,6 +61,12 @@ describe('Edit Order', () => {
     const recipient = makeRecipientFactory()
 
     inMemoryRecipientsRepository.create(recipient)
+
+    const address = makeAddressFactory({
+      recipientId: recipient.id,
+    })
+
+    inMemoryAddressesRepository.create(address)
 
     const deliveryPerson = makeDeliveryPersonFactory()
 

@@ -18,8 +18,9 @@ model User {
   cpf      String @unique
   password String
 
-  role   UserRole @default(DELIVERY_PERSON)
-  orders Order[]
+  role    UserRole @default(DELIVERY_PERSON)
+  orders  Order[]
+  address Address?
 
   @@map("users")
 }
@@ -35,16 +36,19 @@ model Recipient {
 }
 
 model Address {
-  street       String
-  number       Int
-  complement   String?
-  neighborhood String
-  city         String
-  state        String
-  zipcode      String
-  recipientId  String  @unique @map("recipient_id")
+  id               String  @id @default(uuid())
+  street           String
+  number           Int
+  complement       String?
+  neighborhood     String
+  city             String
+  state            String
+  zipcode          String
+  recipientId      String? @unique @map("recipient_id")
+  deliveryPersonId String? @unique @map("delivery_person_id")
 
-  recipient Recipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  recipient      Recipient? @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  deliveryPerson User?      @relation(fields: [deliveryPersonId], references: [id], onDelete: Cascade)
 
   @@map("addresses")
 }
