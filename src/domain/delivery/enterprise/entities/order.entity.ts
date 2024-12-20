@@ -1,7 +1,8 @@
 import { UniqueEntityID } from '@/core/entities/value-objects/unique-entity-id.value-object'
 import { OrderStatus } from '../types/order-status.type'
-import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional.type'
+import { AggregateRoot } from '@/core/entities/aggregate-root.entity'
+import { OrderPostedEvent } from '../../application/events/order-posted.event'
 
 export interface OrderProps {
   recipientId: UniqueEntityID
@@ -13,7 +14,7 @@ export interface OrderProps {
   deliveredAt?: Date | null
 }
 
-export class Order extends Entity<OrderProps> {
+export class Order extends AggregateRoot<OrderProps> {
   get recipientId() {
     return this.props.recipientId
   }
@@ -52,6 +53,13 @@ export class Order extends Entity<OrderProps> {
 
   set postedAt(postedAt: Date) {
     this.props.postedAt = postedAt
+  }
+
+  post() {
+    if (!this.props.postedAt) this.addDomainEvent(new OrderPostedEvent(this))
+
+    this.props.postedAt = new Date()
+    this.props.status = 'WAITING'
   }
 
   get pickedUpAt() {

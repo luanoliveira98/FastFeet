@@ -29,8 +29,7 @@ export class PostOrderUseCase {
 
     if (!isValidOrder) return left(new InvalidOrderError())
 
-    order.status = 'WAITING'
-    order.postedAt = new Date()
+    order.post()
 
     await this.ordersRepository.save(order)
 
