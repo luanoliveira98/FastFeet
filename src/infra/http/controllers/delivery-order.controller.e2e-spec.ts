@@ -23,7 +23,12 @@ describe('Delivery Order (E2E)', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [DeliveryPersonFactory, OrderFactory, RecipientFactory, OrderConfirmationPhotoFactory],
+      providers: [
+        DeliveryPersonFactory,
+        OrderFactory,
+        RecipientFactory,
+        OrderConfirmationPhotoFactory,
+      ],
     }).compile()
 
     app = moduleRef.createNestApplication()
@@ -50,7 +55,8 @@ describe('Delivery Order (E2E)', () => {
 
     const recipient = await recipientFactory.makePrismaRecipient()
 
-    const orderConfirmationPhoto = await orderConfirmationPhotoFactory.makePrismaOrderConfirmationPhoto()
+    const orderConfirmationPhoto =
+      await orderConfirmationPhotoFactory.makePrismaOrderConfirmationPhoto()
 
     const order = await orderFactory.makePrismaOrder({
       recipientId: recipient.id,
@@ -84,15 +90,16 @@ describe('Delivery Order (E2E)', () => {
       }),
     )
 
-    const orderConfirmationPhotoOnDatabase = await prisma.orderConfirmationPhoto.findFirst({
-      where: { id: orderConfirmationPhoto.id.toString() }
-    })
+    const orderConfirmationPhotoOnDatabase =
+      await prisma.orderConfirmationPhoto.findFirst({
+        where: { id: orderConfirmationPhoto.id.toString() },
+      })
 
     expect(orderConfirmationPhotoOnDatabase).toBeTruthy()
     expect(orderConfirmationPhotoOnDatabase).toEqual(
       expect.objectContaining({
         orderId: order.id.toString(),
-      })
+      }),
     )
   })
 })

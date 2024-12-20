@@ -56,5 +56,15 @@ describe('Fetch Nearby Orders', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value.orders).toHaveLength(2)
+    expect(result.value.orders).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: firstOrder.id,
+        }),
+        expect.objectContaining({
+          id: secondOrder.id,
+        }),
+      ]),
+    )
   })
 })

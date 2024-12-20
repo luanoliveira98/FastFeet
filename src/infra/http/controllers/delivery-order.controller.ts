@@ -31,9 +31,9 @@ export class DeliveryOrderController {
   @Patch()
   @HttpCode(204)
   async handle(
-      @Body(bodyValidationPipe) body: BodySchema, 
-      @Param('id') orderId: string, 
-      @CurrentUser() user: UserPayload
+    @Body(bodyValidationPipe) body: BodySchema,
+    @Param('id') orderId: string,
+    @CurrentUser() user: UserPayload,
   ) {
     const { confirmationPhotoId } = body
 

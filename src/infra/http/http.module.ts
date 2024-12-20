@@ -37,6 +37,8 @@ import { StorageModule } from '../storage/storage.module'
 import { DeliveryOrderController } from './controllers/delivery-order.controller'
 import { DeliveryOrderUseCase } from '@/domain/delivery/application/use-cases/delivery-order.use-case'
 import { GeoLocationModule } from '../location/geo-location.module'
+import { FetchNearbyOrdersController } from './controllers/fetch-nearby-orders.controller'
+import { FetchNearbyOrdersUseCase } from '@/domain/delivery/application/use-cases/fetch-nearby-orders.use-case'
 
 @Module({
   imports: [
@@ -63,6 +65,7 @@ import { GeoLocationModule } from '../location/geo-location.module'
     PickUpOrderController,
     UploadOrderConfirmationPhotoController,
     DeliveryOrderController,
+    FetchNearbyOrdersController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -82,6 +85,7 @@ import { GeoLocationModule } from '../location/geo-location.module'
     PickUpOrderUseCase,
     UploadAndCreateOrderConfirmationPhotoUseCase,
     DeliveryOrderUseCase,
+    FetchNearbyOrdersUseCase,
   ],
 })
 export class HttpModule {}
