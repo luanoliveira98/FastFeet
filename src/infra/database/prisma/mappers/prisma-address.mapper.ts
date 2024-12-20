@@ -19,8 +19,8 @@ export class PrismaAddressMapper {
         city: raw.city,
         state: raw.state,
         zipcode: raw.zipcode,
-        latitude: parseFloat(raw.latitude.toString()),
-        longitude: parseFloat(raw.longitude.toString()),
+        latitude: raw.latitude.toNumber(),
+        longitude: raw.longitude.toNumber(),
       },
       new UniqueEntityID(raw.id),
     )

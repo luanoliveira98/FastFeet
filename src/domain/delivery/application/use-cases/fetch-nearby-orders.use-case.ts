@@ -3,21 +3,21 @@ import { Injectable } from '@nestjs/common'
 import { OrdersRepository } from '../repositories/orders.repository.interface'
 import { Order } from '../../enterprise/entities/order.entity'
 
-interface FetchNearbyOrderUseCaseRequest {
+interface FetchNearbyOrdersUseCaseRequest {
   deliveryPersonLatitude: number
   deliveryPersonLongitude: number
 }
 
-type FetchNearbyOrderUseCaseReponse = Either<null, { orders: Order[] }>
+type FetchNearbyOrdersUseCaseReponse = Either<null, { orders: Order[] }>
 
 @Injectable()
-export class FetchNearbyOrderUseCase {
+export class FetchNearbyOrdersUseCase {
   constructor(private readonly ordersRepository: OrdersRepository) {}
 
   async execute({
     deliveryPersonLatitude,
     deliveryPersonLongitude,
-  }: FetchNearbyOrderUseCaseRequest): Promise<FetchNearbyOrderUseCaseReponse> {
+  }: FetchNearbyOrdersUseCaseRequest): Promise<FetchNearbyOrdersUseCaseReponse> {
     const orders = await this.ordersRepository.findManyNearby({
       latitude: deliveryPersonLatitude,
       longitude: deliveryPersonLongitude,

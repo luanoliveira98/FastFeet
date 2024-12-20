@@ -3,13 +3,15 @@ import {
   OrdersRepository,
 } from '@/domain/delivery/application/repositories/orders.repository.interface'
 import { Order } from '@/domain/delivery/enterprise/entities/order.entity'
+import { getDistanceBetweenCoordinates } from 'test/utils/get-distance-between-cordinates.util'
+import { InMemoryAddressesRepository } from './in-memory-addresses.repository'
 
 export class InMemoryOrdersRepository implements OrdersRepository {
   public items: Order[] = []
 
-  // constructor(
-  //   private readonly addressRepository: InMemoryAddressesRepository,
-  // ) {}
+  constructor(
+    private readonly addressRepository: InMemoryAddressesRepository,
+  ) {}
 
   async findById(id: string): Promise<Order | null> {
     const order = this.items.find((item) => item.id.toString() === id)
@@ -20,17 +22,34 @@ export class InMemoryOrdersRepository implements OrdersRepository {
   }
 
   async findManyNearby(params: FindManyNearbyParams): Promise<Order[]> {
-    // const MAX_DISTANCE_IN_KILOMETERS = 1
+    const MAX_DISTANCE_IN_KILOMETERS = 2
 
-    // const orders = this.items.filter((item) => {
-    //   const address = this.addressRepository.findByRecipientId(
-    //     item.recipientId.toString(),
-    //   )
+    const ordersWithDistance = await Promise.all(
+      this.items.map(async (item) => {
+        const address = await this.addressRepository.findByRecipientId(
+          item.recipientId.toString(),
+        )
 
-    //   if (!address) throw new Error('Recipient address not found')
+        if (!address) throw new Error('Recipient address not found')
 
-    // })
-    return this.items
+        const distance = getDistanceBetweenCoordinates(
+          { latitude: params.latitude, longitude: params.longitude },
+          { latitude: address.latitude, longitude: address.longitude },
+        )
+
+        return { item, distance }
+      }),
+    )
+
+    const nearbyOrders = ordersWithDistance
+      .filter(({ item, distance }) => {
+        return (
+          distance < MAX_DISTANCE_IN_KILOMETERS && item.status === 'WAITING'
+        )
+      })
+      .map(({ item }) => item)
+
+    return nearbyOrders
   }
 
   async create(order: Order): Promise<void> {
