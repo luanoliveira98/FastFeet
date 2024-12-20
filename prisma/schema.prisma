@@ -29,8 +29,9 @@ model Recipient {
   id   String @id @default(uuid())
   name String
 
-  address Address?
-  orders  Order[]
+  address      Address?
+  orders       Order[]
+  Notification Notification[]
 
   @@map("recipients")
 }
@@ -88,4 +89,17 @@ model OrderConfirmationPhoto {
   order Order? @relation(fields: [orderId], references: [id])
 
   @@map("order_confirmation_photos")
+}
+
+model Notification {
+  id          String    @id @default(uuid())
+  recipientId String    @map("recipient_id")
+  title       String
+  content     String
+  readAt      DateTime? @map("read_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  recipient Recipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
 }
