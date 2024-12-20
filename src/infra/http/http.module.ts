@@ -41,6 +41,8 @@ import { FetchNearbyOrdersController } from './controllers/fetch-nearby-orders.c
 import { FetchNearbyOrdersUseCase } from '@/domain/delivery/application/use-cases/fetch-nearby-orders.use-case'
 import { FetchMyDeliveriesController } from './controllers/fetch-my-deliveries.controller'
 import { FetchDeliveryPersonDeliveriesUseCase } from '@/domain/delivery/application/use-cases/fetch-delivery-person-deliveries.use-case'
+import { ChangeUserPasswordUseCase } from '@/domain/account/application/use-cases/change-user-password.use-case'
+import { ChangeUserPasswordController } from './controllers/change-user-password.controller'
 
 @Module({
   imports: [
@@ -69,6 +71,7 @@ import { FetchDeliveryPersonDeliveriesUseCase } from '@/domain/delivery/applicat
     DeliveryOrderController,
     FetchNearbyOrdersController,
     FetchMyDeliveriesController,
+    ChangeUserPasswordController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -90,6 +93,7 @@ import { FetchDeliveryPersonDeliveriesUseCase } from '@/domain/delivery/applicat
     DeliveryOrderUseCase,
     FetchNearbyOrdersUseCase,
     FetchDeliveryPersonDeliveriesUseCase,
+    ChangeUserPasswordUseCase,
   ],
 })
 export class HttpModule {}

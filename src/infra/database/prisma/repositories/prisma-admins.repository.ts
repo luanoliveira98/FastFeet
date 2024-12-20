@@ -17,4 +17,20 @@ export class PrismaAdminsRepository implements AdminsRepository {
 
     return PrismaAdminMapper.toDomain(admin)
   }
+
+  async findById(id: string): Promise<Admin | null> {
+    const admin = await this.prisma.user.findUnique({
+      where: { id, role: 'ADMIN' },
+    })
+
+    if (!admin) return null
+
+    return PrismaAdminMapper.toDomain(admin)
+  }
+
+  async save(admin: Admin): Promise<void> {
+    const data = PrismaAdminMapper.toPrisma(admin)
+
+    await this.prisma.user.update({ where: { id: data.id }, data })
+  }
 }
