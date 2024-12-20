@@ -44,6 +44,8 @@ model Address {
   city             String
   state            String
   zipcode          String
+  latitude         Decimal
+  longitude        Decimal
   recipientId      String? @unique @map("recipient_id")
   deliveryPersonId String? @unique @map("delivery_person_id")
 

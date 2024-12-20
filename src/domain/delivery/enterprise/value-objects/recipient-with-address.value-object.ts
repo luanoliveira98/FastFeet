@@ -12,6 +12,8 @@ export interface RecipientWithAddressProps {
   city: string
   state: string
   zipcode: string
+  latitude: number
+  longitude: number
 }
 
 export class RecipientWithAddress extends ValueObject<RecipientWithAddressProps> {
@@ -53,6 +55,14 @@ export class RecipientWithAddress extends ValueObject<RecipientWithAddressProps>
 
   get zipcode() {
     return this.props.zipcode
+  }
+
+  get latitude() {
+    return this.props.latitude
+  }
+
+  get longitude() {
+    return this.props.longitude
   }
 
   static create(props: RecipientWithAddressProps) {

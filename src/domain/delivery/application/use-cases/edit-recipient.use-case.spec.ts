@@ -4,21 +4,25 @@ import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipi
 import { makeRecipientFactory } from 'test/factories/make-recipient.factory'
 import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
 import { makeAddressFactory } from 'test/factories/make-address.factory'
+import { GeoLocationFake } from 'test/location/geo-location.fake'
 
 describe('Edit Recipient', () => {
   let sut: EditRecipientUseCase
   let inMemoryRecipientsRepository: InMemoryRecipientsRepository
   let inMemoryAddressesRepository: InMemoryAddressesRepository
+  let geoLocationFake: GeoLocationFake
 
   beforeEach(() => {
     inMemoryAddressesRepository = new InMemoryAddressesRepository()
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
       inMemoryAddressesRepository,
     )
+    geoLocationFake = new GeoLocationFake()
 
     sut = new EditRecipientUseCase(
       inMemoryRecipientsRepository,
       inMemoryAddressesRepository,
+      geoLocationFake,
     )
   })
 
@@ -50,6 +54,8 @@ describe('Edit Recipient', () => {
       recipient: expect.objectContaining({
         name: 'John Doe',
         complement: 'Complement',
+        latitude: expect.any(Number),
+        longitude: expect.any(Number),
       }),
     })
   })

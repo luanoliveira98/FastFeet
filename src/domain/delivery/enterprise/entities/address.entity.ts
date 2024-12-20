@@ -11,6 +11,8 @@ export interface AddressProps {
   city: string
   state: string
   zipcode: string
+  latitude: number
+  longitude: number
 }
 
 export class Address extends Entity<AddressProps> {
@@ -84,6 +86,22 @@ export class Address extends Entity<AddressProps> {
 
   set zipcode(zipcode: string) {
     this.props.zipcode = zipcode
+  }
+
+  get latitude() {
+    return this.props.latitude
+  }
+
+  set latitude(latitude: number) {
+    this.props.latitude = latitude
+  }
+
+  get longitude() {
+    return this.props.longitude
+  }
+
+  set longitude(longitude: number) {
+    this.props.longitude = longitude
   }
 
   static create(props: AddressProps, id?: UniqueEntityID) {

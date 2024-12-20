@@ -30,6 +30,8 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
       city: address.city,
       state: address.state,
       zipcode: address.zipcode,
+      latitude: address.latitude,
+      longitude: address.longitude,
     })
 
     return recipientWithAddress

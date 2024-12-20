@@ -6,6 +6,7 @@ import { Recipient } from '../../enterprise/entities/recipient.entity'
 import { Address } from '../../enterprise/entities/address.entity'
 import { AddressesRepository } from '../repositories/addresses.repository.interface'
 import { RecipientWithAddress } from '../../enterprise/value-objects/recipient-with-address.value-object'
+import { GeoLocation } from '../location/geo-location.interface'
 
 interface EditRecipientUseCaseRequest {
   recipientId: string
@@ -29,6 +30,7 @@ export class EditRecipientUseCase {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,
     private readonly addressesRepository: AddressesRepository,
+    private readonly geoLocation: GeoLocation,
   ) {}
 
   async execute({
@@ -56,6 +58,13 @@ export class EditRecipientUseCase {
 
     await this.recipientsRepository.save(recipient)
 
+    const { latitude, longitude } = await this.geoLocation.generate({
+      street,
+      number,
+      city,
+      state,
+    })
+
     const address = Address.create(
       {
         street,
@@ -66,6 +75,8 @@ export class EditRecipientUseCase {
         state,
         zipcode,
         recipientId: recipientWithAddress.recipientId,
+        latitude,
+        longitude,
       },
       recipientWithAddress.addressId,
     )
@@ -83,6 +94,8 @@ export class EditRecipientUseCase {
       city,
       state,
       zipcode,
+      latitude,
+      longitude,
     })
 
     return right({ recipient: recipientWithAddressEdited })
