@@ -39,6 +39,8 @@ import { DeliveryOrderUseCase } from '@/domain/delivery/application/use-cases/de
 import { GeoLocationModule } from '../location/geo-location.module'
 import { FetchNearbyOrdersController } from './controllers/fetch-nearby-orders.controller'
 import { FetchNearbyOrdersUseCase } from '@/domain/delivery/application/use-cases/fetch-nearby-orders.use-case'
+import { FetchMyDeliveriesController } from './controllers/fetch-my-deliveries.controller'
+import { FetchDeliveryPersonDeliveriesUseCase } from '@/domain/delivery/application/use-cases/fetch-delivery-person-deliveries.use-case'
 
 @Module({
   imports: [
@@ -66,6 +68,7 @@ import { FetchNearbyOrdersUseCase } from '@/domain/delivery/application/use-case
     UploadOrderConfirmationPhotoController,
     DeliveryOrderController,
     FetchNearbyOrdersController,
+    FetchMyDeliveriesController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -86,6 +89,7 @@ import { FetchNearbyOrdersUseCase } from '@/domain/delivery/application/use-case
     UploadAndCreateOrderConfirmationPhotoUseCase,
     DeliveryOrderUseCase,
     FetchNearbyOrdersUseCase,
+    FetchDeliveryPersonDeliveriesUseCase,
   ],
 })
 export class HttpModule {}
