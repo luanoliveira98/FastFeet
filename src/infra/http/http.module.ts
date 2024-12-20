@@ -36,9 +36,15 @@ import { UploadOrderConfirmationPhotoController } from './controllers/upload-ord
 import { StorageModule } from '../storage/storage.module'
 import { DeliveryOrderController } from './controllers/delivery-order.controller'
 import { DeliveryOrderUseCase } from '@/domain/delivery/application/use-cases/delivery-order.use-case'
+import { GeoLocationModule } from '../location/geo-location.module'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, StorageModule],
+  imports: [
+    DatabaseModule,
+    CryptographyModule,
+    StorageModule,
+    GeoLocationModule,
+  ],
   controllers: [
     AuthenticateController,
     CreateAccountController,

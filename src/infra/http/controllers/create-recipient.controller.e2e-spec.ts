@@ -6,6 +6,7 @@ import { AdminFactory } from 'test/factories/make-admin.factory'
 import { DatabaseModule } from '@/infra/database/database.module'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { Decimal } from '@prisma/client/runtime/library'
 
 describe('Create Recipient (E2E)', () => {
   let app: INestApplication
@@ -41,11 +42,11 @@ describe('Create Recipient (E2E)', () => {
 
     const recipient = {
       name: 'John Doe',
-      street: 'Avenue 01',
-      number: 20,
+      street: 'Rua Dr Cassiano',
+      number: 34,
       neighborhood: 'Center',
-      city: 'City',
-      state: 'ST',
+      city: 'Pelotas',
+      state: 'RS',
       zipcode: '12345678',
     }
 
@@ -65,6 +66,8 @@ describe('Create Recipient (E2E)', () => {
     expect(recipientOnDatabase.address).toEqual(
       expect.objectContaining({
         zipcode: recipient.zipcode,
+        latitude: expect.any(Decimal),
+        longitude: expect.any(Decimal),
       }),
     )
   })

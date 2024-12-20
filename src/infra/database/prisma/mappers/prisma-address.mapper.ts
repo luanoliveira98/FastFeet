@@ -19,6 +19,8 @@ export class PrismaAddressMapper {
         city: raw.city,
         state: raw.state,
         zipcode: raw.zipcode,
+        latitude: parseFloat(raw.latitude.toString()),
+        longitude: parseFloat(raw.longitude.toString()),
       },
       new UniqueEntityID(raw.id),
     )
@@ -36,6 +38,8 @@ export class PrismaAddressMapper {
       city: address.city,
       state: address.state,
       zipcode: address.zipcode,
+      latitude: address.latitude,
+      longitude: address.longitude,
     }
   }
 }

@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { RecipientFactory } from 'test/factories/make-recipient.factory'
 import { AddressFactory } from 'test/factories/make-address.factory'
+import { Decimal } from '@prisma/client/runtime/library'
 
 describe('Edit Recipient (E2E)', () => {
   let app: INestApplication
@@ -58,11 +59,11 @@ describe('Edit Recipient (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         name: 'John Doe',
-        street: 'Avenue 01',
-        number: 20,
+        street: 'Rua Dr Cassiano',
+        number: 34,
         neighborhood: 'Center',
-        city: 'City',
-        state: 'ST',
+        city: 'Pelotas',
+        state: 'RS',
         zipcode: '12345678',
       })
 
@@ -70,6 +71,7 @@ describe('Edit Recipient (E2E)', () => {
 
     const recipientOnDatabase = await prisma.recipient.findUnique({
       where: { id: recipientId },
+      include: { address: true },
     })
 
     expect(recipientOnDatabase).toEqual(
@@ -77,14 +79,11 @@ describe('Edit Recipient (E2E)', () => {
         name: 'John Doe',
       }),
     )
-
-    const addressOnDatabase = await prisma.address.findUnique({
-      where: { recipientId },
-    })
-
-    expect(addressOnDatabase).toEqual(
+    expect(recipientOnDatabase.address).toEqual(
       expect.objectContaining({
         neighborhood: 'Center',
+        latitude: expect.any(Decimal),
+        longitude: expect.any(Decimal),
       }),
     )
   })

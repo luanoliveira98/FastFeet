@@ -13,6 +13,8 @@ export class RecipientWithAddressPresenter {
       city: recipient.city,
       state: recipient.state,
       zipcode: recipient.zipcode,
+      latitude: recipient.latitude,
+      longitude: recipient.longitude,
     }
   }
 }

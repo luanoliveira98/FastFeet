@@ -21,6 +21,8 @@ export function makeAddressFactory(
       city: faker.location.city(),
       state: faker.location.state(),
       zipcode: faker.location.zipCode(),
+      latitude: faker.location.latitude(),
+      longitude: faker.location.longitude(),
       ...override,
     },
     id,
