@@ -6,14 +6,19 @@ import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-de
 import { makeDeliveryPersonFactory } from 'test/factories/make-delivery-person.factory'
 import { InvalidDeliveryPersonError } from './errors/invalid-delivery-person.error'
 import { InvalidOrderError } from './errors/invalid-order.error'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
 
 describe('PickUp Order', () => {
   let sut: PickUpOrderUseCase
   let inMemoryOrdersRepository: InMemoryOrdersRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
   let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 
   beforeEach(() => {
-    inMemoryOrdersRepository = new InMemoryOrdersRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryAddressesRepository,
+    )
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
 
     sut = new PickUpOrderUseCase(

@@ -8,15 +8,21 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { InvalidOrderConfirmationPhotoError } from './errors/invalid-order-confirmation-photo.error'
 import { InvalidOrderError } from './errors/invalid-order.error'
 import { NotAllowedError } from '@/domain/account/application/use-cases/errors/not-allowed.error'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
 
 describe('Delivery Order', () => {
   let sut: DeliveryOrderUseCase
   let inMemoryOrdersRepository: InMemoryOrdersRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
   let inMemoryOrderConfirmationPhotosRepository: InMemoryOrderConfirmationPhotosRepository
 
   beforeEach(() => {
-    inMemoryOrdersRepository = new InMemoryOrdersRepository()
-    inMemoryOrderConfirmationPhotosRepository = new InMemoryOrderConfirmationPhotosRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryAddressesRepository,
+    )
+    inMemoryOrderConfirmationPhotosRepository =
+      new InMemoryOrderConfirmationPhotosRepository()
 
     sut = new DeliveryOrderUseCase(
       inMemoryOrdersRepository,
@@ -28,7 +34,7 @@ describe('Delivery Order', () => {
     const order = makeOrderFactory({
       status: 'PICKED_UP',
       pickedUpAt: new Date(),
-      deliveryPersonId: new UniqueEntityID('delivery-person-id')
+      deliveryPersonId: new UniqueEntityID('delivery-person-id'),
     })
 
     inMemoryOrdersRepository.create(order)
@@ -52,8 +58,8 @@ describe('Delivery Order', () => {
     })
     expect(inMemoryOrderConfirmationPhotosRepository.items[0]).toEqual(
       expect.objectContaining({
-        orderId: order.id
-      })
+        orderId: order.id,
+      }),
     )
   })
 
@@ -61,7 +67,7 @@ describe('Delivery Order', () => {
     const order = makeOrderFactory({
       status: 'PICKED_UP',
       pickedUpAt: new Date(),
-      deliveryPersonId: new UniqueEntityID('delivery-person-id')
+      deliveryPersonId: new UniqueEntityID('delivery-person-id'),
     })
 
     inMemoryOrdersRepository.create(order)
@@ -84,7 +90,7 @@ describe('Delivery Order', () => {
     const order = makeOrderFactory({
       status: 'PICKED_UP',
       pickedUpAt: new Date(),
-      deliveryPersonId: new UniqueEntityID('delivery-person-id')
+      deliveryPersonId: new UniqueEntityID('delivery-person-id'),
     })
 
     inMemoryOrdersRepository.create(order)
@@ -107,7 +113,7 @@ describe('Delivery Order', () => {
     const order = makeOrderFactory({
       status: 'WAITING',
       pickedUpAt: new Date(),
-      deliveryPersonId: new UniqueEntityID('delivery-person-id')
+      deliveryPersonId: new UniqueEntityID('delivery-person-id'),
     })
 
     inMemoryOrdersRepository.create(order)
@@ -130,7 +136,7 @@ describe('Delivery Order', () => {
     const order = makeOrderFactory({
       status: 'PICKED_UP',
       pickedUpAt: null,
-      deliveryPersonId: new UniqueEntityID('delivery-person-id')
+      deliveryPersonId: new UniqueEntityID('delivery-person-id'),
     })
 
     inMemoryOrdersRepository.create(order)
@@ -153,7 +159,7 @@ describe('Delivery Order', () => {
     const order = makeOrderFactory({
       status: 'PICKED_UP',
       pickedUpAt: new Date(),
-      deliveryPersonId: new UniqueEntityID('delivery-person-id')
+      deliveryPersonId: new UniqueEntityID('delivery-person-id'),
     })
 
     inMemoryOrdersRepository.create(order)

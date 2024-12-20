@@ -21,9 +21,11 @@ describe('Edit Order', () => {
   let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
-    inMemoryOrdersRepository = new InMemoryOrdersRepository()
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
     inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryAddressesRepository,
+    )
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
       inMemoryAddressesRepository,
     )

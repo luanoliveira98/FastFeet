@@ -8,6 +8,10 @@ export interface FindManyNearbyParams {
 export abstract class OrdersRepository {
   abstract findById(id: string): Promise<Order | null>
   abstract findManyNearby(params: FindManyNearbyParams): Promise<Order[]>
+  abstract findManyDeliveriesByDeliveryPersonId(
+    deliveryPersonId: string,
+  ): Promise<Order[]>
+
   abstract create(order: Order): Promise<void>
   abstract save(order: Order): Promise<void>
   abstract delete(order: Order): Promise<void>

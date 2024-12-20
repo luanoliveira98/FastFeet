@@ -3,13 +3,18 @@ import { PostOrderUseCase } from './post-order.use-case'
 import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders.repository'
 import { makeOrderFactory } from 'test/factories/make-order.factory'
 import { InvalidOrderError } from './errors/invalid-order.error'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
 
 describe('Post Order', () => {
   let sut: PostOrderUseCase
   let inMemoryOrdersRepository: InMemoryOrdersRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
-    inMemoryOrdersRepository = new InMemoryOrdersRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryAddressesRepository,
+    )
 
     sut = new PostOrderUseCase(inMemoryOrdersRepository)
   })

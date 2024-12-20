@@ -52,6 +52,18 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     return nearbyOrders
   }
 
+  async findManyDeliveriesByDeliveryPersonId(
+    deliveryPersonId: string,
+  ): Promise<Order[]> {
+    const deliveries = this.items.filter(
+      (item) =>
+        item.deliveryPersonId.toString() === deliveryPersonId &&
+        item.status === 'DELIVERED',
+    )
+
+    return deliveries
+  }
+
   async create(order: Order): Promise<void> {
     this.items.push(order)
   }

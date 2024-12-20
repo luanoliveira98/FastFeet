@@ -2,13 +2,18 @@ import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders.rep
 import { makeOrderFactory } from 'test/factories/make-order.factory'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { GetOrderByIdUseCase } from './get-order-by-id.use-case'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
 
 describe('Get Order By Id', () => {
   let sut: GetOrderByIdUseCase
   let inMemoryOrdersRepository: InMemoryOrdersRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
-    inMemoryOrdersRepository = new InMemoryOrdersRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryAddressesRepository,
+    )
 
     sut = new GetOrderByIdUseCase(inMemoryOrdersRepository)
   })

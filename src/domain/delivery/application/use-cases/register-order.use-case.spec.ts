@@ -1,12 +1,17 @@
 import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders.repository'
 import { RegisterOrderUseCase } from './register-order.use-case'
+import { InMemoryAddressesRepository } from 'test/repositories/in-memory-addresses.repository'
 
 describe('Register Order', () => {
   let sut: RegisterOrderUseCase
   let inMemoryOrdersRepository: InMemoryOrdersRepository
+  let inMemoryAddressesRepository: InMemoryAddressesRepository
 
   beforeEach(() => {
-    inMemoryOrdersRepository = new InMemoryOrdersRepository()
+    inMemoryAddressesRepository = new InMemoryAddressesRepository()
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryAddressesRepository,
+    )
 
     sut = new RegisterOrderUseCase(inMemoryOrdersRepository)
   })
