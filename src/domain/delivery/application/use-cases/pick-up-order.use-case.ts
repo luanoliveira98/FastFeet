@@ -42,8 +42,7 @@ export class PickUpOrderUseCase {
     if (!deliveryPerson) return left(new InvalidDeliveryPersonError())
 
     order.deliveryPersonId = deliveryPerson.id
-    order.status = 'PICKED_UP'
-    order.pickedUpAt = new Date()
+    order.pickUp()
 
     await this.ordersRepository.save(order)
 

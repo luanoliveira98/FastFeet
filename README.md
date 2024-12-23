@@ -15,7 +15,7 @@ This is a challenge from Rocketseat's NodeJs course. Development of an API to co
 - [x] It must be possible to list orders with delivery addresses close to the delivery person's location
 - [x] It must be possible to list a user's deliveries
 - [x] It must be possible to change a user's password
-- [ ] It must be possible to notify the recipient of each change in the order status
+- [x] It must be possible to notify the recipient of each change in the order status
 
 ## Business Rules
 

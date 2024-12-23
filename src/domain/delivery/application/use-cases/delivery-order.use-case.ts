@@ -15,7 +15,10 @@ interface DeliveryOrderUseCaseRequest {
 }
 
 type DeliveryOrderUseCaseReponse = Either<
-  ResourceNotFoundError | InvalidOrderConfirmationPhotoError | InvalidOrderError | NotAllowedError,
+  | ResourceNotFoundError
+  | InvalidOrderConfirmationPhotoError
+  | InvalidOrderError
+  | NotAllowedError,
   { order: Order }
 >
 
@@ -35,23 +38,26 @@ export class DeliveryOrderUseCase {
 
     if (!order) return left(new ResourceNotFoundError())
 
-    if (order.deliveryPersonId.toString() !== deliveryPersonId) return left(new NotAllowedError())
+    if (order.deliveryPersonId.toString() !== deliveryPersonId)
+      return left(new NotAllowedError())
 
-    const confirmationPhoto = await this.orderConfirmationPhotosRepository.findById(confirmationPhotoId)
+    const confirmationPhoto =
+      await this.orderConfirmationPhotosRepository.findById(confirmationPhotoId)
 
-    if (!confirmationPhoto) return left(new InvalidOrderConfirmationPhotoError())
+    if (!confirmationPhoto)
+      return left(new InvalidOrderConfirmationPhotoError())
 
-    const isValidOrder = order.status === 'PICKED_UP' && order.pickedUpAt !== null
+    const isValidOrder =
+      order.status === 'PICKED_UP' && order.pickedUpAt !== null
 
     if (!isValidOrder) return left(new InvalidOrderError())
 
-    order.status = 'DELIVERED'
-    order.deliveredAt = new Date()
+    order.delivered()
 
     await this.ordersRepository.save(order)
 
     confirmationPhoto.orderId = order.id
-    
+
     await this.orderConfirmationPhotosRepository.save(confirmationPhoto)
 
     return right({ order })

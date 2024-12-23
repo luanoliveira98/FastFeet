@@ -7,6 +7,7 @@ import {
 import { Order } from '@/domain/delivery/enterprise/entities/order.entity'
 import { PrismaOrderMapper } from '../mappers/prisma-order.mapper'
 import { Order as PrismaOrder } from 'prisma'
+import { DomainEvents } from '@/core/events/domain-events'
 
 @Injectable()
 export class PrismaOrdersRepository implements OrdersRepository {
@@ -63,6 +64,8 @@ export class PrismaOrdersRepository implements OrdersRepository {
       where: { id: order.id.toString() },
       data,
     })
+
+    DomainEvents.dispatchEventsForAggregate(order.id)
   }
 
   async delete(order: Order): Promise<void> {

@@ -3,6 +3,8 @@ import { OrderStatus } from '../types/order-status.type'
 import { Optional } from '@/core/types/optional.type'
 import { AggregateRoot } from '@/core/entities/aggregate-root.entity'
 import { OrderPostedEvent } from '../../application/events/order-posted.event'
+import { OrderPickedUpEvent } from '../../application/events/order-picked-up.event'
+import { OrderDeliveredEvent } from '../../application/events/order-delivered.event'
 
 export interface OrderProps {
   recipientId: UniqueEntityID
@@ -70,12 +72,28 @@ export class Order extends AggregateRoot<OrderProps> {
     this.props.pickedUpAt = pickedUpAt
   }
 
+  pickUp() {
+    if (!this.props.pickedUpAt)
+      this.addDomainEvent(new OrderPickedUpEvent(this))
+
+    this.props.pickedUpAt = new Date()
+    this.props.status = 'PICKED_UP'
+  }
+
   get deliveredAt() {
     return this.props.deliveredAt
   }
 
   set deliveredAt(deliveredAt: Date) {
     this.props.deliveredAt = deliveredAt
+  }
+
+  delivered() {
+    if (!this.props.deliveredAt)
+      this.addDomainEvent(new OrderDeliveredEvent(this))
+
+    this.props.deliveredAt = new Date()
+    this.props.status = 'DELIVERED'
   }
 
   static create(
